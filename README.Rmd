@@ -23,23 +23,44 @@ indicadores selecionados pela 5a Edição do Relatório de Indicadores de Susten
 
 A verificação de consistência é uma avaliação realizada para indicar se os dados apresentados apresentam algum conflito interno ou incoerência. Nesse sentido, esta seção tem como objetivo averiguar a qualidade e relatar problemas ou erros no conjunto de dados fornecido pela ANEEL.
 
-- Número de VaripaveisVariáveis Repetidas
+- Variáveis Repetidas
 
-- Mais de uma variável com o mesmo nome.
+```{r, echo = F, warning = FALSE, message = F}
 
-```{r, echo = F}
-library(readxl)
+library(data.table); library(dplyr)
+
+  # File and sheet location
+
+  sheet <- "Base Dados"
   folder_path <- "/home/renatovp/Dropbox/Cemig 2.0/BaseDadosANEEL/Base em Excel"
+  
   # Get file path for all documents in the folder
-  path_files <- list.files(folder_path, full.names = T, pattern = ".xlsx")
+  path_files <- list.files(folder_path, full.names = T, pattern = ".xlsx") 
   
   # Read all files
-  file_dump <- lapply(path_files, function(x) read_xlsx(path = x, sheet = sheet, skip = 5, col_names = T ))
+  
+  file_dump <- lapply(path_files, function(x) readxl::read_xlsx(path = x, sheet = sheet, skip = 5, col_names = F )) # Note that it takes column names as first observation of dataset
+  
+  col_names <- NULL
   
   for(i in 1:length(path_files)){
-    file_dump[[i]]$Arquivo <- path_files[i]
+      col_names[[i]] <- data.frame(col = t(file_dump[[i]][1,]), file = path_files[i])
   }
+  
+  # Binds every file in folder path 
+  col_names <- data.table::rbindlist(col_names); 
+
+  # Keeps table good-looking
+  
+  tab <- addmargins(table(col_names$col, col_names$file))
+  colnames(tab) <-c("A1", "A2", "A3", "A4", "A5", "Total")
+  i <- c(order(tab[,6], decreasing = T)[-1], dim(tab)[1])
+  
+  rownames(tab)[which(rownames(tab) == "Sum")] <- "Total"
+  
+  pander::pander(tab[i,])
 ```
+
   - Tabela de contingência do número de variáveis selecionadas por tabela.
 - Mesma entrada com valores diferentes em anos diferentes.
   - Exemplo da Cemig.
@@ -57,7 +78,7 @@ válida será considerada.
 - A primeira coluna com um determinado nome de variável será selecionada.
 
 ```{r data-last}
-dt <- read.csv("dados_last_not_na.csv")
+# dt <- read.csv("dados_last_not_na.csv")
 ```
 
 - Histogramas das variáveis.
