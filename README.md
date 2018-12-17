@@ -1,33 +1,38 @@
 read\_aneel
 ================
 
-today
-----------------
+Análise exploratória da base de dados do relatório de indicadores de
+====================================================================
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+sustentatibilidade econômico-financeiros - ANEEL
 
-Including Code
---------------
+Dada a necessidade de sistematização do monitoramento econômico-financeiro, a ANEEL compila uma base de dados com variáveis financeiras e operacionais das empresas distribuidoras de energia elétrica. As bases estão presentes em cinco arquivos .xlsx e apresentam dados anuais para cada empresa até 2016 e trimestrais desde então.
 
-You can include R code in the document as follows:
+Embora a base de dados tenha um grande número de variáveis disponíveis, os indicadores selecionados pela 5a Edição do Relatório de Indicadores de Sustentabilidade Econômico-Financeira das Distribuidoras (pg 28):
+
+![](./img/indicadores.png)
+
+Análise de consistência
+-----------------------
+
+-   Mais de uma variável com o mesmo nome.
+-   Tabela de contingência do número de variáveis selecionadas por tabela.
+-   Mesma entrada com valores diferentes em anos diferentes.
+-   Exemplo da Cemig.
+
+Análise descritiva
+------------------
+
+Prosseguiremos agora para a análise descritiva da base de dados. Numa tentativa de contornar os problemas previamente citados, assumimos algumas premissas:
+
+-   Os dados mais recentes são mais confiáveis e serão utilizados quando houver valores repetidos para uma determinada entrada no banco de dados.
+-   Quando o valor não estiver disponível (NA) na base mais recente, a última entrada válida será considerada.
+-   A primeira coluna com um determinado nome de variável será selecionada.
 
 ``` r
-summary(cars)
+dt <- read.csv("dados_last_not_na.csv")
 ```
 
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
-
-Including Plots
----------------
-
-You can also embed plots, for example:
-
-![](README_files/figure-markdown_github/pressure-1.png)
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+-   Histogramas das variáveis.
+-   Correlograma - Elipse.
+-   Série temporal das variáveis selecionadas para a Cemig.
