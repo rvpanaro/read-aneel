@@ -16,6 +16,8 @@ sustentatibilidade econômico-financeiros - ANEEL
 
 ## Análise de consistência 
 
+
+
 - Mais de uma variável com o mesmo nome.
   - Tabela de contingência do número de variáveis selecionadas por tabela.
 - Mesma entrada com valores diferentes em anos diferentes.

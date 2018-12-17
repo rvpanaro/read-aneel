@@ -1,33 +1,27 @@
 read\_aneel
 ================
 
-today
-----------------
+Análise exploratória da base de dados do relatório de indicadores de
+====================================================================
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+sustentatibilidade econômico-financeiros - ANEEL
 
-Including Code
---------------
+-   Intro.
+-   Características da base.
+-   Indicadores selecionados.
 
-You can include R code in the document as follows:
+Análise de consistência
+-----------------------
 
-``` r
-summary(cars)
-```
+-   Mais de uma variável com o mesmo nome.
+-   Tabela de contingência do número de variáveis selecionadas por tabela.
+-   Mesma entrada com valores diferentes em anos diferentes.
+-   Exemplo da Cemig.
 
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
+Análise descritiva
+------------------
 
-Including Plots
----------------
-
-You can also embed plots, for example:
-
-![](README_files/figure-markdown_github/pressure-1.png)
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+-   Intro: a última que não é NA, os valores são sempre da primeira coluna das sselecionadas.
+-   Histogramas das variáveis.
+-   Correlograma - Elipse.
+-   Série temporal das variáveis selecionadas para a Cemig.
