@@ -16,9 +16,25 @@ sustentatibilidade econômico-financeiros - ANEEL
 
 ## Análise de consistência 
 
+A verificação de consistência é uma avaliação realizada para indicar se os dados apresentados apresentam algum conflito interno ou incoerência. Nesse sentido, esta seção tem como objetivo averiguar a qualidade e relatar problemas ou erros no conjunto de dados fornecido pela ANEEL.
 
+- Número de VaripaveisVariáveis Repetidas
 
 - Mais de uma variável com o mesmo nome.
+
+```{r, echo = F}
+library(readxl)
+  folder_path <- "/home/renatovp/Dropbox/Cemig 2.0/BaseDadosANEEL/Base em Excel"
+  # Get file path for all documents in the folder
+  path_files <- list.files(folder_path, full.names = T, pattern = ".xlsx")
+  
+  # Read all files
+  file_dump <- lapply(path_files, function(x) read_xlsx(path = x, sheet = sheet, skip = 5, col_names = T ))
+  
+  for(i in 1:length(path_files)){
+    file_dump[[i]]$Arquivo <- path_files[i]
+  }
+```
   - Tabela de contingência do número de variáveis selecionadas por tabela.
 - Mesma entrada com valores diferentes em anos diferentes.
   - Exemplo da Cemig.
