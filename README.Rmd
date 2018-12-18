@@ -111,11 +111,33 @@ Os tipos de dados são um conceito importante para aplicação correta de técni
 
 ![](img/diag.png)
 
-Os indicadores selecionados são de natureza numérica e mede distintos aspectos das distribuidoras, provenientes da combinação de outros atributos. No entanto, além de valores inteiros ou reais, na maioria das variáveis listadas encontra-se células com caracteres, o que evidencia outra inconsistência na base de dados. Variáveis qualitativos foram imputados em campos de natureza quantitativa levando em consideraçoã situaõçes adversas inerente ao cálculo dos indicadores, no Apêndice B segue a interpretação dada aos valores usados segundo o Glossário da página 27 da 5ª Edição do Relatório.
+Os indicadores selecionados são provenientes da combinação de outros atributos de natureza numérica, uma vez que medem distintos aspectos financeiros das distribuidoras. No entanto, além de valores inteiros e reais, encontram-se células com caracteres, o que evidencia outra inconsistência na base de dados.  Em campos de natureza quantitativa, variáveis qualitativas foram consideradas para situações adversas inerentes ao cálculo dos indicadores. No Apêndice B segue a interpretação dada aos valores usados segundo o Glossário da página 27 da 5ª Edição do Relatório.
+
+```{r, echo = F, warnings = F, message = F }
+source("read_aneel3.R"); library(pander)
+  
+dat <- read_aneel3(folder_path = folder_path, sheet = sheet, col_names = header, clean_names = F )
+  
+  cat <- c("Cxa Líq", "Flx Neg", "Ebitda Neg", "nd")
+  
+# out_char <-  function(var, cat){
+#   
+#  i <- which(colnames(dat)== var) 
+#  
+#  pander( addmargins(table( as.factor(subset(dat[,i], dat[,i] == cat) ) ) ), caption = var)
+# }  
+# 
+# out_char("DLR / EBITDA - QRR", cat)
+# 
+# for (aux in header){
+#   out_char(aux, cat)
+# }
+
+```
+
+## Princípio da Unicidade
 
 
-
-- Mesma entrada com valores diferentes em anos diferentes.
 - Exemplo da Cemig.
 
 ## Análise descritiva
