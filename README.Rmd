@@ -17,7 +17,7 @@ arquivos .xlsx e apresentam dados anuais para cada empresa até 2016 e trimestra
 desde então. Embora a base de dados tenha um grande número de variáveis disponíveis, os 
 indicadores selecionados pela 5a Edição do Relatório de Indicadores de Sustentabilidade Econômico-Financeira das Distribuidoras (pg 28):
 
-![](./img/indicadores.png)
+![Figura 1 : Indicadores Selecionados](./img/indicadores.png)
 
 ## Análise de consistência 
 
@@ -27,7 +27,7 @@ A verificação de consistência é uma avaliação realizada para indicar se os
 
 O banco de dados é uma coleção organizada de dados que se relacionam de forma a criar alguma informação, capaz de direcionar pesquisas, estudos e tomadas de decisão. O modelo (plano) de base de dados adotado pela ANEEL consiste de matrizes bidimensionais que são a base para as planilhas eletrônicas, compostas por células de caracteres, inteiros ou números reais. 
 
-A violação da unicidade na nomenclatura dos atributos foi uma grave inconsistência encontrada nas cinco bases de dados dos Relatórios de Sustentabilidade, no arquivo de número 5 (A5), por exemplo, há dois atributos **EBIT**. A repetição de colunas com a mesma alcunha gera um conflito de atributos que impossibilita a manutenção da desiginação original, de modo que, a importação dos dados usando *data loaders* (eg.: 'read_xlsx') dos principais pacotes estatísticos automaticamente alteram o identificador original e tratam a informação como **EBIT** e **EBIT_1**. A tabela de frequência abaixo apresenta os atributos conflitantes, as siglas **A1**-**A5** referem-se aos cinco arquivos .xlsx disponíveis. Note que uma base de dados consistente exibiria frequência 1 em cada arquivo e um total de 5.  
+A violação da unicidade na nomenclatura dos atributos foi uma grave inconsistência encontrada nas cinco bases de dados dos Relatórios de Sustentabilidade, no arquivo de número 5 (A5), por exemplo, há dois atributos **EBIT**. A repetição de colunas com a mesma alcunha gera um conflito de atributos que impossibilita a manutenção da desiginação original, de modo que, a importação dos dados usando *data loaders* (eg.: 'read_xlsx') dos principais pacotes estatísticos automaticamente alteram o identificador original e tratam a informação como **EBIT** e **EBIT_1**. A tabela de frequência do Apêndice A apresenta os atributos conflitantes, as siglas **A1**-**A5** referem-se aos cinco arquivos .xlsx disponíveis. Note que uma base de dados consistente exibiria frequência 1 em cada arquivo e um total de 5.
 
 
 ```{r, echo = F, warning = FALSE, message = F}
@@ -59,13 +59,9 @@ library(data.table); library(dplyr); library(pander)
   colnames(tab) <-c("A1", "A2", "A3", "A4", "A5", "Total")
   rownames(tab)[which(rownames(tab) == "Sum")] <- "Total"
   
-  # Ordering by highest frequency
-    tab1 <- subset(tab, tab[,6] != 5)
-  pander(tab1[order(tab1[,6], decreasing = T),],
-                 caption = "**A1**:Indicadores Base 2017 1T 2017 08 07.xlsx, **A2**: Indicadores Base 2017 2T 2017 11 10.xlsx, **A3**: Indicadores Base 2017 3T 2018 02 20.xlsx, **A4**: Indicadores Base 2018 1T 2018 08 06.xlsx e **A5**: Indicadores Base 2018 1T 2018 08 06.xlsx.")
 ```
 
-A tabela abaixo exibe os 11 indicadores selecionados na seção IV (p. 28) da 5ª Edição do Relatório de Indicadores de Sustentabilidade Econômico-Financeira das Distribuidoras. 
+A Tabela 1 exibe os 11 indicadores selecionados na seção IV (p. 28) da 5ª Edição do Relatório de Indicadores de Sustentabilidade Econômico-Financeira das Distribuidoras. 
 
 ```{r, echo = F, warning = F}
 header = c("DLR / EBITDA - QRR",
@@ -84,34 +80,39 @@ header = c("DLR / EBITDA - QRR",
 
 
 tab2 <- tab[match( header, rownames(tab)), ]
-pander(tab2, caption = "Indicadores Selecionados.")
+pander(tab2, caption = "Tabela 1: Indicadores Selecionados. **A1**:Indicadores Base 2017 1T 2017 08 07.xlsx, **A2**: Indicadores Base 2017 2T 2017 11 10.xlsx, **A3**: Indicadores Base 2017 3T 2018 02 20.xlsx, **A4**: Indicadores Base 2018 1T 2018 08 06.xlsx e **A5**: Indicadores Base 2018 1T 2018 08 06.xlsx.")
 ```
 
 Foi feito o estudo descritivo dos indicadores **1**, **2.1**, **2.2**, **4.1**, **4.2**, **5**, **6.2**, **6.4** com base em 9 atributos inicialmente consistentes.
 
-- 1 DLR / EBITDA - QRR
+- 1.) DLR / EBITDA - QRR
 
-- 2.1 EBITDA Ajst / VPB Reg
+- 2.1) EBITDA Ajst / VPB Reg
 
-- 2.2 PMSO Ajustado / PMSO Regulatório
+- 2.2) PMSO Ajustado / PMSO Regulatório
 
-- 4.1 EBIT Ajst - EBIT Reg / BRL
+- 4.1) EBIT Ajst - EBIT Reg / BRL
 
-- 4.2 Setoriais Constituição / EBITDA Reg
+- 4.2) Setoriais Constituição / EBITDA Reg
 
-- 5 Fluxo Acionista / (BRL x Cap Próprio)
+- 5.) Fluxo Acionista / (BRL x Cap Próprio)
 
-- 6.2 Perdas Realizadas
+- 6.2) Perdas Realizadas
 
-- 6.2 Perdas Regulatórias
+- 6.2) Perdas Regulatórias
 
-- 6.4 Nº CAGR U5A
+- 6.4) Nº CAGR U5A
 
 -------------------------------------
 
-### 
+### Tipos de Dados
 
-A maioria das variáveis acima são provenientes de combinações de outros atributos e outro passo seria a aferição do cálculo desses indicadores.
+Os tipos de dados são um conceito importante para aplicação correta de técnicas estatíticas. As informações ou dados quantitativos (numéricos) são baseados em uma de medição. Em contraste, as informações qualitativas (categóricas) registram qualidades que são descritivas e subjetivas que representam grupos ou características (e.g.: sexo) e podem assumir valores numéricos (e.g.: 1 para mulheres e 0 para homens), observe que não têm significado matemático.
+
+![](img/diag.png)
+
+Os indicadores selecionados são de natureza numérica e mede distintos aspectos das distribuidoras, provenientes da combinação de outros atributos. No entanto, além de valores inteiros ou reais, na maioria das variáveis listadas encontra-se células com caracteres, o que evidencia outra inconsistência na base de dados. Variáveis qualitativos foram imputados em campos de natureza quantitativa levando em consideraçoã situaõçes adversas inerente ao cálculo dos indicadores, no Apêndice B segue a interpretação dada aos valores usados segundo o Glossário da página 27 da 5ª Edição do Relatório.
+
 
 
 - Mesma entrada com valores diferentes em anos diferentes.
@@ -136,3 +137,58 @@ válida será considerada.
 - Histogramas das variáveis.
 - Correlograma - Elipse.
 - Série temporal das variáveis selecionadas para a Cemig.
+
+## Apêndice A
+
+```{r, echo = F}
+# Ordering by highest frequency
+    tab1 <- subset(tab, tab[,6] != 5)
+ pander(tab1[order(tab1[,6], decreasing = T),],
+                 caption = "**A1**:Indicadores Base 2017 1T 2017 08 07.xlsx, **A2**: Indicadores Base 2017 2T 2017 11 10.xlsx, **A3**: Indicadores Base 2017 3T 2018 02 20.xlsx, **A4**: Indicadores Base 2018 1T 2018 08 06.xlsx e **A5**: Indicadores Base 2018 1T 2018 08 06.xlsx.")
+```
+
+## Apêndice B
+
+| Variável              | Dicionário                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Ajst                  | Ajustado. O termo “Ajst” aplicado ao PMSO, EBIT e EBITDA se refere ao estorno das Despesas com Programa de Demissão Voluntária, Déficit ou Superávit Atuarial dos Benefícios Pós-Emprego, Provisões Credoras, Provisão para Redução ao Valor Recuperação e Recuperação de Despesas acima de 1% da ROL e que está em consonância com os ajustes previstos para o EBITDA dos contratos de distribuição aditivados a partir de dez/2015.                              |
+| BAR                   | Base de Anuidade Regulatória.                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| BRL                   | Base de Remuneração Líquida. Fonte: Laudo de Avaliação                                                                                                                                                                                                                                                                                                                                                                                                             |
+| CAIMI                 | Custo Anual das Instalações Móveis e Imóveis (Anuidades).                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Capex                 | Investimento realizado pela concessionária em AIS e AIC deduzido de 50% das baixas líquidas e das Obrigações Especiais em AIS e AIC, corrigido pelo IPCA. Fonte: RIT - RP 1232.D                                                                                                                                                                                                                                                                                   |
+| Cxa Líq               | Caixa Líquido = ativos financeiros maiores que a dívida bruta. Para índices como [DLR / (EBITDA - QRR)] não faz sentido calculá-lo.                                                                                                                                                                                                                                                                                                                                |
+| DEC                   | Duração Equivalente de Interrupção por Unidade Consumidora. Fonte: Site ANEEL                                                                                                                                                                                                                                                                                                                                                                                      |
+| DGC                   | Indicador de Desempenho Global de Continuidade. Fonte: Site ANEEL                                                                                                                                                                                                                                                                                                                                                                                                  |
+| DLR                   | Dívida Líquida com Ativos e Passivos Financeiros Setoriais.                                                                                                                                                                                                                                                                                                                                                                                                        |
+| EBIT                  | Earns Before Interest and Taxes = Resultado das Atividades.                                                                                                                                                                                                                                                                                                                                                                                                        |
+| EBIT Ajst             | Ajst: EBIT Ajustado = Resultado das Atividades Ajustado. Para fins de cálculo do indicador 4.1, excluiu-se a Despesa com Aluguéis e Arrendamentos, uma vez que estes gastos relativos à BAR são reembolsados pelo CAIMI.                                                                                                                                                                                                                                           |
+| EBIT Reg              | EBIT Regulatório = Resultado da Atividade Regulatório = Remuneração Bruta.Na RTP, há discriminação de Outras Receitas que são abatidas para a modicidade tarifária. Nos RTOs, só há abertura a partir de 2017 para os contratos aditivados. Assim, para os  RTOs que não têm Outras Receitas, calculou-se essas receitas pela variação do IPCA que é agregado ao VPB, que por sua vez é deduzido pelo PMSO e pela QRRC para se obter a Remuneração Regulatória.    |
+| EBITDA                | Earns Before Interest, Taxes, Depreciation and Amortization = Geração Operacional Bruta de Caixa. EBIT acrescido das despesas de amortização e de depreciação.                                                                                                                                                                                                                                                                                                     |
+| EBITDA Ajst           | EBIT Ajst acrescido das despesas de amortização e de depreciação.                                                                                                                                                                                                                                                                                                                                                                                                  |
+| EBITDA Reg            | EBITDA Regulatório.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| FEC                   | Frequência Equivalente de Interrupção por Unidade Consumidora. Fonte: Site ANEEL                                                                                                                                                                                                                                                                                                                                                                                   |
+| Fluxo do Acionista    | Somatório de dividendos, juros sobre o capital próprio (JCP), aportes de capital, adiantamentos para futuro aumento de capital com entrada efetiva de recursos, emissão de ações, redução de capital e conversão de mútuos passivos.                                                                                                                                                                                                                               |
+| Flx Neg               | Resultado menor que zero do EBITDA deduzido da QRR => QRR > EBITDA.                                                                                                                                                                                                                                                                                                                                                                                                |
+| IRT                   | Índice de Reajuste Tarifário.                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Mercado GWh CAGR U5A  | Taxa composta de crescimento anual (Compound Annual Growth Rate) do mercado livre e cativo em GWh faturados nos últimos 5 anos. Fonte: SAMP                                                                                                                                                                                                                                                                                                                        |
+| Nº Consumid. CAGR U5A | Taxa composta de crescimento anual (Compound Annual Growth Rate) do número total de consumidores nos últimos 5 anos. Fonte: SAMP                                                                                                                                                                                                                                                                                                                                   |
+| Perdas Realizadas     | Perdas da energia injetada. Fonte: Samp                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| Perdas Regulatórias   | Perdas regulatórias de energia injetada. Obtenção por meio do cálculo pro rata mês das revisões/reajustes anteriores. Fonte: IRT                                                                                                                                                                                                                                                                                                                                   |
+| PMSO                  | Somatório das Despesas de Pessoal, Materiais, Serviços de Terceiros e Outros (inclui Amortização e Depreciação).                                                                                                                                                                                                                                                                                                                                                   |
+| PMSO Cxa              | Somatório das Despesas de Pessoal, Materiais, Serviços de Terceiros e Outros de Efeito Caixa (exclui Amortização e Depreciação).                                                                                                                                                                                                                                                                                                                                   |
+| PMSO Cxa Ajst         | Somatório das Despesas de Pessoal, Materiais, Serviços de Terceiros e Outros de Efeito Caixa (exclui Amortização e Depreciação) Ajustado. Para fins de cálculo do indicador 2.2, excluiu-se a Despesa com Aluguéis e Arrendamentos, uma vez que estes gastos relativos à BAR são remunerados pelo CAIMI e as despesas de geração.                                                                                                                                  |
+| PMSO Reg              | PMSO Cxa Regulatório (CAOM e Ajustes da Parcela B). Nos interstícios entre revisões terá alteração conforme a variação % entre o VPB1 DRP Ano 1 e o VPB1 DRP Ano 0, ambos sem Outras Receitas.                                                                                                                                                                                                                                                                     |
+| QRR                   | Quota de Reintegração Regulatória. Nos interstícios entre revisões terá alteração conforme a variação % entre o VPB1 DRP Ano 1 e o VPB1 DRP Ano 0, ambos sem Outras Receitas.                                                                                                                                                                                                                                                                                      |
+| QRRC                  | Quota de Reintegração Regulatória acrescida de 66,44% do Caimi, relativa à parte de depreciação da BAR. Nos interstícios entre revisões terá alteração conforme a variação% entre o VPB1 DRP Ano 1 e o VPB1 DRP Ano 0, ambos sem Outras Receitas.                                                                                                                                                                                                                  |
+| Rec Bruta             | Somatório das receitas brutas da atividade operacional = (-) 61X1 (-) 61X1.X.30/1.                                                                                                                                                                                                                                                                                                                                                                                 |
+| Res Fin Pos           | Resultado Financeiro positivo = receitas financeiras superam as despesas financeiras. Para o índice Res. Fin. / EBITDA não faz sentido calculá-lo.                                                                                                                                                                                                                                                                                                                 |
+| ROL                   | Somatório das receitas brutas da atividade operacional deduzido dos tributos indiretos = (-) 61X1 (-) 61X1.X.31.                                                                                                                                                                                                                                                                                                                                                   |
+| RTO                   | Reajuste Tarifário Ordinário.                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| RTP                   | Revisão Tarifária Periódica.                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Selic                 | Taxa média anual ponderada e ajustada das operações de financiamento lastreadas em títulos públicos federais, calculada diariamente e apresentada no sítio do Banco Centraldo Brasil - http://www.bcb.gov.br/?SELICACUMUL. Para fins específicos deste projeto e em consonância com os novos contratos de distribuição, a Selic deverá ser limitada ao valor de  12,87% (doze inteiros e oitenta e sete centésimos por cento) ao ano, caso supere esse percentual. |
+| U4A                   | Últimos 4 (quatro) anos.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| U5A                   | Útimos 5 (cinco) anos.                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| UDM                   | Últimos 12 (doze) meses.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| VPA                   | Custos da Parcela A = Custos setoriais = Encargos do Consumidor, Despesas com Compra de Energia, Transmissão e Combustível para Geração (líquido do Reembolso da CCC).                                                                                                                                                                                                                                                                                             |
+| VPB                   | Parcela B = ROL deduzida dos Custos da Parcela A (VPA).                                                                                                                                                                                                                                                                                                                                                                                                            |
+| VPB Reg               | Parcela B Regulatória = Itens calculados pela ANEEL e contemplados na tarifa de Despesas de PMSO e Depreciação e Remuneração dos investimentos realizados prudentemente. Observa-se que nos RTOs, só há abertura de Outras Receitas a partir de 2017 para os contratos aditivados. Assim, para os RTOs que não as têm, calculou-se essas receitas pela variação do IPCA que é agregado ao VPB das tarifas para se chegar ao VPB Reg.                               |
