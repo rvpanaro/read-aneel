@@ -21,13 +21,17 @@ indicadores selecionados pela 5a Edição do Relatório de Indicadores de Susten
 
 ## Análise de consistência 
 
-A verificação de consistência é uma avaliação realizada para indicar se os dados apresentados apresentam algum conflito interno ou incoerência. Nesse sentido, esta seção tem como objetivo averiguar a qualidade e relatar problemas ou erros no conjunto de dados fornecido pela ANEEL.
+A verificação de consistência é uma avaliação realizada para indicar se os dados apresentam algum conflito interno ou incoerência. Nesse sentido, esta seção tem como objetivo averiguar a qualidade e relatar problemas ou erros no conjunto de informações fornecidas pelos 5 de Indicadores de Sustentatibilidade Econômico-Financeiros das Distribuidoras da ANEEL.
 
-- Variáveis Repetidas
+### Repetição de Atributos (Colunas)
+
+O banco de dados é uma coleção organizada de dados que se relacionam de forma a criar alguma informação, capaz de direcionar pesquisas, estudos e tomadas de decisão. O modelo (plano) de base de dados adotado pela ANEEL consiste de matrizes bidimensionais que são a base para as planilhas eletrônicas, compostas por células de caracteres, inteiros ou números reais. 
+
+A violação da unicidade na nomenclatura dos atributos foi uma grave inconsistência encontrada nas cinco bases de dados dos Relatórios de Sustentabilidade, no arquivo de número 5 (A5), por exemplo, há dois atributos **EBIT**. A repetição de colunas com a mesma alcunha gera um conflito de atributos que impossibilita a manutenção da desiginação original, de modo que, a importação dos dados usando *data loaders* (eg.: 'read_xlsx') dos principais pacotes estatísticos automaticamente alteram o identificador original e tratam a informação como **EBIT** e **EBIT_1**. A tabela de frequência abaixo apresenta os atributos conflitantes, as siglas **A1**-**A5** referem-se aos cinco arquivos .xlsx disponíveis. Note que uma base de dados consistente exibiria frequência 1 em cada arquivo e um total de 5.  
+
 
 ```{r, echo = F, warning = FALSE, message = F}
-
-library(data.table); library(dplyr)
+library(data.table); library(dplyr); library(pander)
 
   # File and sheet location
 
@@ -39,31 +43,79 @@ library(data.table); library(dplyr)
   
   # Read all files
   
-  file_dump <- lapply(path_files, function(x) readxl::read_xlsx(path = x, sheet = sheet, skip = 5, col_names = F )) # Note that it takes column names as first observation of dataset
+  file_dump <- lapply(path_files, function(x) readxl::read_xlsx(path = x, sheet = sheet, skip = 5, col_names = F )) # Note takes header as first observation
   
-  col_names <- NULL
+  header <- NULL
   
   for(i in 1:length(path_files)){
-      col_names[[i]] <- data.frame(col = t(file_dump[[i]][1,]), file = path_files[i])
+      header[[i]] <- data.frame(col = t(file_dump[[i]][1,]), file = path_files[i])
   }
   
   # Binds every file in folder path 
-  col_names <- data.table::rbindlist(col_names); 
+  header <- data.table::rbindlist(header); 
 
   # Keeps table good-looking
-  
-  tab <- addmargins(table(col_names$col, col_names$file))
+    tab <- addmargins(table(header$col, header$file), 2); rm (header)
   colnames(tab) <-c("A1", "A2", "A3", "A4", "A5", "Total")
-  i <- c(order(tab[,6], decreasing = T)[-1], dim(tab)[1])
-  
   rownames(tab)[which(rownames(tab) == "Sum")] <- "Total"
   
-  pander::pander(tab[i,])
+  # Ordering by highest frequency
+    tab1 <- subset(tab, tab[,6] != 5)
+  pander(tab1[order(tab1[,6], decreasing = T),],
+                 caption = "**A1**:Indicadores Base 2017 1T 2017 08 07.xlsx, **A2**: Indicadores Base 2017 2T 2017 11 10.xlsx, **A3**: Indicadores Base 2017 3T 2018 02 20.xlsx, **A4**: Indicadores Base 2018 1T 2018 08 06.xlsx e **A5**: Indicadores Base 2018 1T 2018 08 06.xlsx.")
 ```
 
-  - Tabela de contingência do número de variáveis selecionadas por tabela.
+A tabela abaixo exibe os 11 indicadores selecionados na seção IV (p. 28) da 5ª Edição do Relatório de Indicadores de Sustentabilidade Econômico-Financeira das Distribuidoras. 
+
+```{r, echo = F, warning = F}
+header = c("DLR / EBITDA - QRR",
+           "EBITDA Ajst / VPB Reg", 
+           "PMSO Ajustado / PMSO Regulatório", 
+           "Capex U4/5A", 
+           "QRR U4/5A", 
+           "EBIT Ajst - EBIT Reg / BRL",
+           "Setoriais Constituição / EBITDA Reg",
+           "Fluxo Acionista / (BRL x Cap Próprio)",
+           "DGC", 
+           "Perdas Realizadas",
+           "Perdas Regulatórias",
+           "Mercado CAGR U5A",
+           "Nº CAGR U5A")
+
+
+tab2 <- tab[match( header, rownames(tab)), ]
+pander(tab2, caption = "Indicadores Selecionados.")
+```
+
+Foi feito o estudo descritivo dos indicadores **1**, **2.1**, **2.2**, **4.1**, **4.2**, **5**, **6.2**, **6.4** com base em 9 atributos inicialmente consistentes.
+
+- 1 DLR / EBITDA - QRR
+
+- 2.1 EBITDA Ajst / VPB Reg
+
+- 2.2 PMSO Ajustado / PMSO Regulatório
+
+- 4.1 EBIT Ajst - EBIT Reg / BRL
+
+- 4.2 Setoriais Constituição / EBITDA Reg
+
+- 5 Fluxo Acionista / (BRL x Cap Próprio)
+
+- 6.2 Perdas Realizadas
+
+- 6.2 Perdas Regulatórias
+
+- 6.4 Nº CAGR U5A
+
+-------------------------------------
+
+### 
+
+A maioria das variáveis acima são provenientes de combinações de outros atributos e outro passo seria a aferição do cálculo desses indicadores.
+
+
 - Mesma entrada com valores diferentes em anos diferentes.
-  - Exemplo da Cemig.
+- Exemplo da Cemig.
 
 ## Análise descritiva
 
