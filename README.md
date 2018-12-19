@@ -324,7 +324,7 @@ ggplot(dt_sel, aes(dlr_ebitda_ajst_qrr)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/endividamento-1.png)
+![](img/endividamento-1.png)
 
 ### Eficiência
 
@@ -335,7 +335,7 @@ ggplot(dt_sel, aes(ebitda_ajst_vpb_reg)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/ef-1-1.png)
+![](img/ef-1-1.png)
 
 ``` r
 ggplot(dt_sel, aes(pmso_ajustado_pmso_regulatorio)) +
@@ -344,7 +344,7 @@ ggplot(dt_sel, aes(pmso_ajustado_pmso_regulatorio)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/ef-2-1.png)
+![](img/ef-2-1.png)
 
 ### Investimentos
 
@@ -355,7 +355,7 @@ ggplot(dt_sel, aes(capex_u4_5a)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/investimentos-1.png)
+![](img/investimentos-1.png)
 
 ### Rentabilidade
 
@@ -366,7 +366,7 @@ ggplot(dt_sel, aes(ebit_ajst_ebit_reg_brl)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/rentabilidade-1.png)
+![](img/rentabilidade-1.png)
 
 ``` r
 ggplot(dt_sel, aes(setoriais_constituicao_ebitda_reg)) +
@@ -375,7 +375,7 @@ ggplot(dt_sel, aes(setoriais_constituicao_ebitda_reg)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/rentabilidade-2-1.png)
+![](img/rentabilidade-2-1.png)
 
 ### Retorno ao acionista
 
@@ -386,7 +386,7 @@ ggplot(dt_sel, aes(fluxo_acionista_brl_x_cap_proprio)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/acionista-1.png)
+![](img/acionista-1.png)
 
 ### Operacional
 
@@ -397,7 +397,7 @@ ggplot(dt_sel, aes(dgc)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/dgc-1.png)
+![](img/dgc-1.png)
 
 ``` r
 ggplot(dt_sel, aes(perdas_realizadas)) +
@@ -406,7 +406,7 @@ ggplot(dt_sel, aes(perdas_realizadas)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/perdas-1-1.png)
+![](img/perdas-1-1.png)
 
 ``` r
 ggplot(dt_sel, aes(perdas_regulatorias)) +
@@ -415,7 +415,7 @@ ggplot(dt_sel, aes(perdas_regulatorias)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/perdas-2-1.png)
+![](img/perdas-2-1.png)
 
 ``` r
 ggplot(dt_sel, aes(mercado_cagr_u5a)) +
@@ -424,7 +424,7 @@ ggplot(dt_sel, aes(mercado_cagr_u5a)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/mercado-1.png)
+![](img/mercado-1.png)
 
 ``` r
 ggplot(dt_sel, aes(n_cagr_u5a)) +
@@ -433,7 +433,7 @@ ggplot(dt_sel, aes(n_cagr_u5a)) +
   theme_light()
 ```
 
-![](README_files/figure-markdown_github/consumidores-1.png)
+![](img/consumidores-1.png)
 
 ### Correlograma
 
@@ -452,7 +452,7 @@ xc <- cor_matrix[ord, ord]
 ellipse::plotcorr(xc, col=cm.colors(12)[5*xc + 6], type = "lower", diag = TRUE)
 ```
 
-![](README_files/figure-markdown_github/correlogram-1.png)
+![](img/correlogram-1.png)
 
 ### Séries temporais para a cemig
 
