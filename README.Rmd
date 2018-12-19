@@ -19,7 +19,7 @@ arquivos .xlsx e apresentam dados anuais para cada empresa até 2016 e trimestra
 desde então. Embora a base de dados tenha um grande número de variáveis disponíveis, os principais
 indicadores foram selecionados na 5ª Edição do Relatório de Indicadores de Sustentabilidade Econômico-Financeira das Distribuidoras (pg 28):
 
-![Figura 1 : Indicadores Selecionados](./img/indicadores.png)
+![Figura 1 : Indicadores Selecionados.](./img/indicadores.png)
 
 ## Análise de consistência 
 
@@ -68,7 +68,7 @@ library(data.table); library(dplyr); library(pander)
 
 
 ```{r, echo = F, warning = F}
-header = c("DLR / EBITDA - QRR",
+header = c("DLR / EBITDA Ajst - QRR",
            "EBITDA Ajst / VPB Reg", 
            "PMSO Ajustado / PMSO Regulatório", 
            "Capex U4/5A", 
@@ -91,7 +91,7 @@ pander(tab2, caption = "Tabela 1: **A1**:Indicadores Base 2017 1T 2017 08 07.xls
 
 O tipo de variável é um conceito primordial para aplicação correta de técnicas estatíticas. Há dois tipos de dado o quantitativo ou numérico que resulta de uma mensuração (e.g.: estatura, peso) e o dado qualitativo ou categórico que registra qualidades descritivas ou subjetivas, podem representar grupos ou características (e.g.: sexo) e podem assumir valores numéricos (e.g.: 1 para mulheres e 0 para homens), observe que uma varivel categórica não têm significado matemático.
 
-<div style="text-align:center"><img src ="img/diag.png" /></div>
+![Figura 2: Tipos de dado](img/diag.png)
 
 Os indicadores selecionados são provenientes da combinação de atributos de natureza numérica. No entanto, variáveis qualitativas foram consideradas em campos de natureza quantitativa com objetivo de sinalizar situações adversas inerentes ao cálculo desses indicadores. Ou seja, além de valores inteiros e reais, encontram-se células com caracteres, o que configura outra inconsistência na BD. No Apêndice B segue a interpretação para cada valor usado, segundo o Glossário (p. 27) da 5ª Edição do Relatório.
 
@@ -100,14 +100,14 @@ source("read_aneel3.R"); library(pander); library(dplyr)
   
 dat <- read_aneel3(folder_path = folder_path, sheet = sheet, col_names = header, clean_names = F )
 
-#  DLR / EBITDA - QRR  
+#  DLR / EBITDA Ajst - QRR  
 
 dat %>% 
-  select(`DLR / EBITDA - QRR`) %>% 
-  filter(`DLR / EBITDA - QRR` == "Cxa Líq" | 
-         `DLR / EBITDA - QRR` == "Flx Neg" | 
-         `DLR / EBITDA - QRR` == "Ebitda Neg" | 
-         `DLR / EBITDA - QRR` == "nd") %>% 
+  select(`DLR / EBITDA Ajst - QRR`) %>% 
+  filter(`DLR / EBITDA Ajst - QRR` == "Cxa Líq" | 
+         `DLR / EBITDA Ajst - QRR` == "Flx Neg" | 
+         `DLR / EBITDA Ajst - QRR` == "Ebitda Neg" | 
+         `DLR / EBITDA Ajst - QRR` == "nd") %>% 
   table() %>% 
   pander()
 
@@ -161,41 +161,121 @@ dat %>%
   pander()
 ```
 
+<table>
+ <caption>Tabela 2:  Presença de dados qualitativos nos campos quantitativos.</caption>
+<thead>
+<tr>
+<th></th>
+<th>Cxa Líq</th>
+<th>Ebitda Neg</th>
+<th>Flx Neg</th>
+<th>nd</th>
+<th>0 / +</th>
+<th>- / +</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DLR / EBITDA Ajst - QRR</td>
+<td>220</td>
+<td>359</td>
+<td>264</td>
+<td>12</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Setoriais Constituição / EBITDA Reg</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>2093</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Fluxo Acionista / (BRL x Cap Próprio)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>394</td>
+<td>317</td>
+</tr>
+<tr>
+<td>DGC</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>443</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Perdas Realizadas</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>443</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Perdas Regulatórias</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>443</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Nº CAGR U5A</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>58</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
 
-|                                       | Cxa Líq | Ebitda Neg | Flx Neg | nd   | 0 / + | - / + |
-|---------------------------------------|---------|------------|---------|------|-------|-------|
-| DLR / EBITDA - QRR                    | 233     | 303        | 203     | 12   | -     | -     |
-| Setoriais Constituição / EBITDA Reg   | -       | -          | -       | 2093 | -     | -     |
-| Fluxo Acionista / (BRL x Cap Próprio) | -       | -          | -       | -    | 394   | 317   |
-| DGC                                   | -       | -          | -       | 443  | -     | -     |
-| Perdas Realizadas                     | -       | -          | -       | 443  | -     | -     |
-| Perdas Regulatórias                   | -       | -          | -       | 443  | -     | -     |
-| Nº CAGR U5A                           | -       | -          | -       | 58   | -     | -     |
+<!-- |                                       | Cxa Líq | Ebitda Neg | Flx Neg | nd   | 0 / + | - / + | -->
+<!-- |---------------------------------------|---------|------------|---------|------|-------|-------| -->
+<!-- | DLR / EBITDA Ajst - QRR               | 220     | 359        | 264     | 12   | -     | -     | -->
+<!-- | Setoriais Constituição / EBITDA Reg   | -       | -          | -       | 2093 | -     | -     | -->
+<!-- | Fluxo Acionista / (BRL x Cap Próprio) | -       | -          | -       | -    | 394   | 317   | -->
+<!-- | DGC                                   | -       | -          | -       | 443  | -     | -     | -->
+<!-- | Perdas Realizadas                     | -       | -          | -       | 443  | -     | -     | -->
+<!-- | Perdas Regulatórias                   | -       | -          | -       | 443  | -     | -     | -->
+<!-- | Nº CAGR U5A                           | -       | -          | -       | 58   | -     | -     | -->
 
-Isto posto, foi feita a verificação do cálculo dos indicadores no intuito de desvendar os valores correspondentes à "Cxa Líq", "Flx Neg", "Ebitda Neg", nd", "0 / +" e "- / +". Surpreendentemente, regressamos ao problema inicial de colunas repetidas, porém, desta vez com relação aos valores que geram os indicadores selecionados, além disso, descobrimos que há atributos de mesmo nome com valores distintos. Por exemplo, no arquivo **A5** as colunas **EBITDA Ajst** e **EBITDA Ajst_1** diferem 576 vezes (Apêndice C). 
+Isto posto, foi feita a verificação do cálculo dos indicadores no intuito de desvendar os valores correspondentes à "Cxa Líq", "Flx Neg", "Ebitda Neg", nd", "0 / +" e "- / +". Surpreendentemente, regressamos ao problema inicial de colunas repetidas, porém, desta vez com relação aos valores que geram os indicadores selecionados, além disso, descobrimos que há atributos de mesmo nome com valores distintos. Por exemplo, no arquivo **A5** as colunas **EBITDA Ajst** e **EBITDA Ajst_1** diferem 576 vezes (Apêndice C), a Tabela 3 mostra alguns desses conflitos. 
 
 ```{r, echo = F, warnings = F, message = F}
 
 tab4 <- file_dump[[5]][-1,which(file_dump[[5]][1,]== "EBITDA Ajst")]
 colnames(tab4) <- c("EBITDA Ajst", "EBITDA Ajst_1")
 
-tab4 %>% 
+tab4 <- tab4 %>% 
   mutate(`EBITDA Ajst` = as.numeric(`EBITDA Ajst`), `EBITDA Ajst_1` = as.numeric(`EBITDA Ajst_1`)) %>% 
   filter(round(`EBITDA Ajst`, 4)!= round(`EBITDA Ajst_1`, 4)) %>% 
-  head() %>% 
-  pander()
+  head() 
+
+  pander(tab4, caption = "Tabela 3: Comparação entre atributos de mesmo nome.")
 ```
 
 ### Princípio da Unicidade
 
-Nesta seção foi abordado o princípio da unicidade baseado em chaves primárias de um sitema de BD relacional. Apesar de não haver estruturação ou relações no plano de BD usado esse conceito proporciona a identificacão de cada item armazenado nas tuplas (linhas) de modo singular. O conceito de chaves primárias refere-se ao campo cujos valores podem ser usadas como um índice de referência, logo, uma chave primária não pode ter valor nulo ou repetição. Na BD, esse indicador único é a variável 'Referência' composta pela combinação de 'Distribuição' e 'Período'. Porém, no exemplo a seguir observamos a violação desse princípio. 
+Nesta seção foi abordado o princípio da unicidade baseado em chaves primárias de um sitema de BD relacional. Apesar de não haver estruturação ou relações no plano de BD usado esse conceito proporciona a identificacão de cada item armazenado nas tuplas (linhas) de modo singular. O conceito de chaves primárias refere-se ao campo cujos valores podem ser usadas como um índice de referência, logo, uma chave primária não pode ter valor nulo ou repetição. Na BD, esse indicador único é a variável 'Referência' composta pela combinação de 'Distribuição' e 'Período'. Porém, na Tabela 4, a seguir, observamos a violação desse princípio. Note que a referência é a mesma, porém o valor presente na célula **Mercado CAGR U5A** difere.
 
 ```{r, echo = F, warnings = F, message = F}
 tab5 <- dat %>% 
   filter(`Referência` == "Cemig-D201703") 
 
 pander(tab5[, c(which(colnames(tab5) ==  "Referência"),
-                      which(tab5[1,] != tab5[2,]))])
+                      which(tab5[1,] != tab5[2,]))], caption = "Tabela 4: Violação do princípio de unicidade de cada observação.")
 ```
 
 ### Conclusão
@@ -217,7 +297,7 @@ válida será considerada.
 
 Foi feito o estudo descritivo dos indicadores **1**, **2.1**, **2.2**, **4.1**, **4.2**, **5**, **6.2**, **6.4** com base em 9 atributos inicialmente consistentes.
 
-- 1.) DLR / EBITDA - QRR
+- 1.) DLR / EBITDA Ajst - QRR
 
 - 2.1) EBITDA Ajst / VPB Reg
 
@@ -235,13 +315,11 @@ Foi feito o estudo descritivo dos indicadores **1**, **2.1**, **2.2**, **4.1**, 
 
 - 6.4) Nº CAGR U5A
 
--------------------------------------
-
 ```{r data-last}
 library(dplyr)
 library(ggplot2)
 
-dt <- read.csv("dados_last_not_na.csv")
+dt <- read.csv("data/dados_last_not_na.csv")
 
 dt_sel <- dt %>% 
   select(dlr_ebitda_ajst_qrr, ebitda_ajst_vpb_reg, pmso_ajustado_pmso_regulatorio,
@@ -263,7 +341,48 @@ variáveis perdas realizadas e perdas regulatórias presentes no indicador 6.2 s
 apresentadas como duas variáveis separadas. As variáveis apresentam um grande número
 de valores faltantes, como mostrado na tabela abaixo.
 
-> Adicionar gráfico de faltantes.
+```{r, echo = F}
+
+cnames1 <-  c("Média", "Mediana", "DP","CV")
+cnames2 <-  c("1º Q", "3º Q", "DIQ", "NA")
+
+rnames <- c("DLR / EBITDA Ajst - QRR",
+            "EBITDA Ajst / VPB Reg",
+            "PMSO Ajustado / PMSO Regulatório",
+            "EBIT Ajst - EBIT Reg / BRL",
+            "Setoriais Constituição / EBITDA Reg",
+            "Fluxo Acionista / (BRL x Cap Próprio)",
+            "Perdas Realizadas",
+            "Perdas Regulatórias",
+            "Nº CAGR U5A")
+
+desc1 <- matrix(NA, ncol = length(cnames1), nrow = length(rnames), dimnames = list(rnames, cnames1))
+desc2 <- matrix(NA, ncol = length(cnames2), nrow = length(rnames), dimnames = list(rnames, cnames2))
+
+rnames <- dat %>% 
+  select(rnames) %>% 
+  janitor::clean_names() %>% 
+  colnames()
+rnames[which(rnames == "nº_cagr_u5a")] <- "n_cagr_u5a"
+
+
+dt2 <- dt_sel[, match(rnames, colnames(dt_sel))] 
+
+desc1[,1] <- apply(dt2, 2, mean, na.rm = T)
+desc1[,2] <- apply(dt2, 2, median, na.rm = T)
+desc1[,3] <- apply(dt2, 2, sd, na.rm = T)
+desc1[,4] <- desc1[,1] / desc1[,3]
+
+desc2[,1] <- apply(dt2, 2, function(x) quantile(x, na.rm = T)[2])
+desc2[,2] <- apply(dt2, 2, function(x) quantile(x, na.rm = T)[4])
+desc2[,3] <- desc2[,2] - desc2[,1]
+desc2[,4] <- apply(dt2, 2, function(x)sum(is.na(x)))
+
+pander::pander(desc1, digits = 4, caption = "Tabela 5: Média, Mediana, Desvio-Padrão (DP) e Coeficiente de Variação (CV)")
+pander::pander(desc2, digits = 4, caption = "Tabela 6: Primeiro quartil (1º Q), Terceiro Quartil (3º Q), Distância Interquartílica (DIQ) e Dados Faltantes (NA).")
+```
+
+
 
 ### Endividamento
 
