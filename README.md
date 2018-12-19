@@ -8,7 +8,7 @@ sustentatibilidade econômico-financeiros - ANEEL
 
 Dada a necessidade de sistematização do monitoramento econômico-financeiro, a ANEEL compila uma base de dados com variáveis financeiras e operacionais das empresas distribuidoras de energia elétrica. As bases estão presentes em cinco arquivos .xlsx e apresentam dados anuais para cada empresa até 2016 e trimestrais desde então. Embora a base de dados tenha um grande número de variáveis disponíveis, os principais indicadores foram selecionados na 5ª Edição do Relatório de Indicadores de Sustentabilidade Econômico-Financeira das Distribuidoras (pg 28):
 
-![Figura 1 : Indicadores Selecionados](./img/indicadores.png)
+![Figura 1 : Indicadores Selecionados.](./img/indicadores.png)
 
 Análise de consistência
 -----------------------
@@ -47,7 +47,7 @@ A tabela de frequência do Apêndice A apresenta todos os atributos conflitantes
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>DLR / EBITDA - QRR</strong></td>
+<td align="center"><strong>DLR / EBITDA Ajst - QRR</strong></td>
 <td align="center">1</td>
 <td align="center">1</td>
 <td align="center">1</td>
@@ -170,23 +170,216 @@ A tabela de frequência do Apêndice A apresenta todos os atributos conflitantes
 
 O tipo de variável é um conceito primordial para aplicação correta de técnicas estatíticas. Há dois tipos de dado o quantitativo ou numérico que resulta de uma mensuração (e.g.: estatura, peso) e o dado qualitativo ou categórico que registra qualidades descritivas ou subjetivas, podem representar grupos ou características (e.g.: sexo) e podem assumir valores numéricos (e.g.: 1 para mulheres e 0 para homens), observe que uma varivel categórica não têm significado matemático.
 
-<img src ="img/diag.png" />
+![Figura 2: Tipos de dado](img/diag.png)
 
 Os indicadores selecionados são provenientes da combinação de atributos de natureza numérica. No entanto, variáveis qualitativas foram consideradas em campos de natureza quantitativa com objetivo de sinalizar situações adversas inerentes ao cálculo desses indicadores. Ou seja, além de valores inteiros e reais, encontram-se células com caracteres, o que configura outra inconsistência na BD. No Apêndice B segue a interpretação para cada valor usado, segundo o Glossário (p. 27) da 5ª Edição do Relatório.
 
-|                                       | Cxa Líq | Ebitda Neg | Flx Neg | nd   | 0 / + | - / + |
-|---------------------------------------|---------|------------|---------|------|-------|-------|
-| DLR / EBITDA - QRR                    | 233     | 303        | 203     | 12   | -     | -     |
-| Setoriais Constituição / EBITDA Reg   | -       | -          | -       | 2093 | -     | -     |
-| Fluxo Acionista / (BRL x Cap Próprio) | -       | -          | -       | -    | 394   | 317   |
-| DGC                                   | -       | -          | -       | 443  | -     | -     |
-| Perdas Realizadas                     | -       | -          | -       | 443  | -     | -     |
-| Perdas Regulatórias                   | -       | -          | -       | 443  | -     | -     |
-| Nº CAGR U5A                           | -       | -          | -       | 58   | -     | -     |
+<table>
+<caption>
+Tabela 2: Presença de dados qualitativos nos campos quantitativos.
+</caption>
+<thead>
+<tr>
+<th>
+</th>
+<th>
+Cxa Líq
+</th>
+<th>
+Ebitda Neg
+</th>
+<th>
+Flx Neg
+</th>
+<th>
+nd
+</th>
+<th>
+0 / +
+</th>
+<th>
+-   / +
+    </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>
+    DLR / EBITDA Ajst - QRR
+    </td>
+    <td>
+    220
+    </td>
+    <td>
+    359
+    </td>
+    <td>
+    264
+    </td>
+    <td>
+    12
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Setoriais Constituição / EBITDA Reg
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    2093
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Fluxo Acionista / (BRL x Cap Próprio)
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    394
+    </td>
+    <td>
+    317
+    </td>
+    </tr>
+    <tr>
+    <td>
+    DGC
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    443
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Perdas Realizadas
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    443
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Perdas Regulatórias
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    443
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Nº CAGR U5A
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    58
+    </td>
+    <td>
+    -
+    </td>
+    <td>
+    -
+    </td>
+    </tr>
+    </tbody>
+    </table>
 
-Isto posto, foi feita a verificação do cálculo dos indicadores no intuito de desvendar os valores correspondentes à "Cxa Líq", "Flx Neg", "Ebitda Neg", nd", "0 / +" e "- / +". Surpreendentemente, regressamos ao problema inicial de colunas repetidas, porém, desta vez com relação aos valores que geram os indicadores selecionados, além disso, descobrimos que há atributos de mesmo nome com valores distintos. Por exemplo, no arquivo **A5** as colunas **EBITDA Ajst** e **EBITDA Ajst\_1** diferem 576 vezes (Apêndice C).
+<!-- |                                       | Cxa Líq | Ebitda Neg | Flx Neg | nd   | 0 / + | - / + | -->
+<!-- |---------------------------------------|---------|------------|---------|------|-------|-------| -->
+<!-- | DLR / EBITDA Ajst - QRR               | 220     | 359        | 264     | 12   | -     | -     | -->
+<!-- | Setoriais Constituição / EBITDA Reg   | -       | -          | -       | 2093 | -     | -     | -->
+<!-- | Fluxo Acionista / (BRL x Cap Próprio) | -       | -          | -       | -    | 394   | 317   | -->
+<!-- | DGC                                   | -       | -          | -       | 443  | -     | -     | -->
+<!-- | Perdas Realizadas                     | -       | -          | -       | 443  | -     | -     | -->
+<!-- | Perdas Regulatórias                   | -       | -          | -       | 443  | -     | -     | -->
+<!-- | Nº CAGR U5A                           | -       | -          | -       | 58   | -     | -     | -->
+Isto posto, foi feita a verificação do cálculo dos indicadores no intuito de desvendar os valores correspondentes à "Cxa Líq", "Flx Neg", "Ebitda Neg", nd", "0 / +" e "- / +". Surpreendentemente, regressamos ao problema inicial de colunas repetidas, porém, desta vez com relação aos valores que geram os indicadores selecionados, além disso, descobrimos que há atributos de mesmo nome com valores distintos. Por exemplo, no arquivo **A5** as colunas **EBITDA Ajst** e **EBITDA Ajst\_1** diferem 576 vezes (Apêndice C), a Tabela 3 mostra alguns desses conflitos.
 
 <table style="width:40%;">
+<caption>Tabela 3: Comparação entre atributos de mesmo nome.</caption>
 <colgroup>
 <col width="19%" />
 <col width="20%" />
@@ -227,9 +420,10 @@ Isto posto, foi feita a verificação do cálculo dos indicadores no intuito de 
 
 ### Princípio da Unicidade
 
-Nesta seção foi abordado o princípio da unicidade baseado em chaves primárias de um sitema de BD relacional. Apesar de não haver estruturação ou relações no plano de BD usado esse conceito proporciona a identificacão de cada item armazenado nas tuplas (linhas) de modo singular. O conceito de chaves primárias refere-se ao campo cujos valores podem ser usadas como um índice de referência, logo, uma chave primária não pode ter valor nulo ou repetição. Na BD, esse indicador único é a variável 'Referência' composta pela combinação de 'Distribuição' e 'Período'. Porém, no exemplo a seguir observamos a violação desse princípio.
+Nesta seção foi abordado o princípio da unicidade baseado em chaves primárias de um sitema de BD relacional. Apesar de não haver estruturação ou relações no plano de BD usado esse conceito proporciona a identificacão de cada item armazenado nas tuplas (linhas) de modo singular. O conceito de chaves primárias refere-se ao campo cujos valores podem ser usadas como um índice de referência, logo, uma chave primária não pode ter valor nulo ou repetição. Na BD, esse indicador único é a variável 'Referência' composta pela combinação de 'Distribuição' e 'Período'. Porém, na Tabela 4, a seguir, observamos a violação desse princípio. Note que a referência é a mesma, porém o valor presente na célula **Mercado CAGR U5A** difere.
 
 <table>
+<caption>Tabela 4: Violação do princípio de unicidade de cada observação.</caption>
 <colgroup>
 <col width="22%" />
 <col width="44%" />
@@ -271,7 +465,7 @@ Prosseguiremos agora para a análise descritiva da BD. Numa tentativa de contorn
 
 Foi feito o estudo descritivo dos indicadores **1**, **2.1**, **2.2**, **4.1**, **4.2**, **5**, **6.2**, **6.4** com base em 9 atributos inicialmente consistentes.
 
--   1.) DLR / EBITDA - QRR
+-   1.) DLR / EBITDA Ajst - QRR
 
 -   2.1) EBITDA Ajst / VPB Reg
 
@@ -289,11 +483,177 @@ Foi feito o estudo descritivo dos indicadores **1**, **2.1**, **2.2**, **4.1**, 
 
 -   6.4) Nº CAGR U5A
 
-------------------------------------------------------------------------
-
 A base de dados apresenta as 11 variáveis selecionadas no documento da ANEEL. As variáveis perdas realizadas e perdas regulatórias presentes no indicador 6.2 são apresentadas como duas variáveis separadas. As variáveis apresentam um grande número de valores faltantes, como mostrado na tabela abaixo.
 
-> Adicionar gráfico de faltantes.
+<table>
+<caption>Tabela 5: Média, Mediana, Desvio-Padrão (DP) e Coeficiente de Variação (CV)</caption>
+<colgroup>
+<col width="44%" />
+<col width="14%" />
+<col width="14%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Média</th>
+<th align="center">Mediana</th>
+<th align="center">DP</th>
+<th align="center">CV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>DLR / EBITDA Ajst - QRR</strong></td>
+<td align="center">228.2</td>
+<td align="center">227</td>
+<td align="center">132.7</td>
+<td align="center">1.719</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>EBITDA Ajst / VPB Reg</strong></td>
+<td align="center">0.1098</td>
+<td align="center">0.3259</td>
+<td align="center">1.191</td>
+<td align="center">0.09215</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>PMSO Ajustado / PMSO Regulatório</strong></td>
+<td align="center">1.186</td>
+<td align="center">1.067</td>
+<td align="center">1.472</td>
+<td align="center">0.8056</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>EBIT Ajst - EBIT Reg / BRL</strong></td>
+<td align="center">-0.1646</td>
+<td align="center">-0.02584</td>
+<td align="center">1.244</td>
+<td align="center">-0.1323</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Setoriais Constituição / EBITDA Reg</strong></td>
+<td align="center">-0.03088</td>
+<td align="center">0</td>
+<td align="center">0.346</td>
+<td align="center">-0.08926</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Fluxo Acionista / (BRL x Cap Próprio)</strong></td>
+<td align="center">141.7</td>
+<td align="center">140.5</td>
+<td align="center">80</td>
+<td align="center">1.771</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Perdas Realizadas</strong></td>
+<td align="center">0.1228</td>
+<td align="center">0.1004</td>
+<td align="center">0.08245</td>
+<td align="center">1.489</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Perdas Regulatórias</strong></td>
+<td align="center">0.1037</td>
+<td align="center">0.094</td>
+<td align="center">0.05196</td>
+<td align="center">1.996</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Nº CAGR U5A</strong></td>
+<td align="center">0.03349</td>
+<td align="center">0.0304</td>
+<td align="center">0.01515</td>
+<td align="center">2.21</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<caption>Tabela 6: Primeiro quartil (1º Q), Terceiro Quartil (3º Q), Distância Interquartílica (DIQ) e Dados Faltantes (NA).</caption>
+<colgroup>
+<col width="40%" />
+<col width="20%" />
+<col width="12%" />
+<col width="19%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">1º Q</th>
+<th align="center">3º Q</th>
+<th align="center">DIQ</th>
+<th align="center">NA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>DLR / EBITDA Ajst - QRR</strong></td>
+<td align="center">114</td>
+<td align="center">342</td>
+<td align="center">228</td>
+<td align="center">330</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>EBITDA Ajst / VPB Reg</strong></td>
+<td align="center">0.11</td>
+<td align="center">0.4933</td>
+<td align="center">0.3833</td>
+<td align="center">14</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>PMSO Ajustado / PMSO Regulatório</strong></td>
+<td align="center">0.8689</td>
+<td align="center">1.314</td>
+<td align="center">0.4452</td>
+<td align="center">24</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>EBIT Ajst - EBIT Reg / BRL</strong></td>
+<td align="center">-0.1112</td>
+<td align="center">0.05352</td>
+<td align="center">0.1647</td>
+<td align="center">24</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Setoriais Constituição / EBITDA Reg</strong></td>
+<td align="center">-0.00000004616</td>
+<td align="center">0</td>
+<td align="center">0.00000004616</td>
+<td align="center">671</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Fluxo Acionista / (BRL x Cap Próprio)</strong></td>
+<td align="center">71.75</td>
+<td align="center">212.2</td>
+<td align="center">140.5</td>
+<td align="center">511</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Perdas Realizadas</strong></td>
+<td align="center">0.07557</td>
+<td align="center">0.1388</td>
+<td align="center">0.06322</td>
+<td align="center">330</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Perdas Regulatórias</strong></td>
+<td align="center">0.07191</td>
+<td align="center">0.1263</td>
+<td align="center">0.05435</td>
+<td align="center">330</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Nº CAGR U5A</strong></td>
+<td align="center">0.02427</td>
+<td align="center">0.03891</td>
+<td align="center">0.01464</td>
+<td align="center">338</td>
+</tr>
+</tbody>
+</table>
 
 ### Endividamento
 
@@ -2654,350 +3014,6 @@ Apêndice C
 <tr class="even">
 <td align="center">208660</td>
 <td align="center">408996</td>
-</tr>
-<tr class="odd">
-<td align="center">-110736</td>
-<td align="center">-138230</td>
-</tr>
-<tr class="even">
-<td align="center">193625</td>
-<td align="center">144514</td>
-</tr>
-<tr class="odd">
-<td align="center">103167</td>
-<td align="center">274251</td>
-</tr>
-<tr class="even">
-<td align="center">-388895</td>
-<td align="center">-388913</td>
-</tr>
-<tr class="odd">
-<td align="center">-99317</td>
-<td align="center">-121300</td>
-</tr>
-<tr class="even">
-<td align="center">522535</td>
-<td align="center">289728</td>
-</tr>
-<tr class="odd">
-<td align="center">41110</td>
-<td align="center">122264</td>
-</tr>
-<tr class="even">
-<td align="center">-84131</td>
-<td align="center">116292</td>
-</tr>
-<tr class="odd">
-<td align="center">347903</td>
-<td align="center">618425</td>
-</tr>
-<tr class="even">
-<td align="center">303647</td>
-<td align="center">574062</td>
-</tr>
-<tr class="odd">
-<td align="center">100146</td>
-<td align="center">503619</td>
-</tr>
-<tr class="even">
-<td align="center">270361</td>
-<td align="center">475783</td>
-</tr>
-<tr class="odd">
-<td align="center">332235</td>
-<td align="center">752805</td>
-</tr>
-<tr class="even">
-<td align="center">725850</td>
-<td align="center">1047393</td>
-</tr>
-<tr class="odd">
-<td align="center">332561</td>
-<td align="center">328052</td>
-</tr>
-<tr class="even">
-<td align="center">-223827</td>
-<td align="center">-247741</td>
-</tr>
-<tr class="odd">
-<td align="center">-528747</td>
-<td align="center">-720519</td>
-</tr>
-<tr class="even">
-<td align="center">-434965</td>
-<td align="center">-648350</td>
-</tr>
-<tr class="odd">
-<td align="center">0</td>
-<td align="center">-4240</td>
-</tr>
-<tr class="even">
-<td align="center">3655</td>
-<td align="center">5966</td>
-</tr>
-<tr class="odd">
-<td align="center">0</td>
-<td align="center">-18395</td>
-</tr>
-<tr class="even">
-<td align="center">793.2</td>
-<td align="center">5213</td>
-</tr>
-<tr class="odd">
-<td align="center">526198</td>
-<td align="center">836422</td>
-</tr>
-<tr class="even">
-<td align="center">647440</td>
-<td align="center">647440</td>
-</tr>
-<tr class="odd">
-<td align="center">279523</td>
-<td align="center">643171</td>
-</tr>
-<tr class="even">
-<td align="center">3092</td>
-<td align="center">8058</td>
-</tr>
-<tr class="odd">
-<td align="center">436741</td>
-<td align="center">729058</td>
-</tr>
-<tr class="even">
-<td align="center">189613</td>
-<td align="center">306673</td>
-</tr>
-<tr class="odd">
-<td align="center">89306</td>
-<td align="center">247768</td>
-</tr>
-<tr class="even">
-<td align="center">0</td>
-<td align="center">-14715</td>
-</tr>
-<tr class="odd">
-<td align="center">0</td>
-<td align="center">-10685</td>
-</tr>
-<tr class="even">
-<td align="center">842106</td>
-<td align="center">842106</td>
-</tr>
-<tr class="odd">
-<td align="center">595228</td>
-<td align="center">1020073</td>
-</tr>
-<tr class="even">
-<td align="center">236796</td>
-<td align="center">441284</td>
-</tr>
-<tr class="odd">
-<td align="center">0</td>
-<td align="center">-40760</td>
-</tr>
-<tr class="even">
-<td align="center">0</td>
-<td align="center">-13813</td>
-</tr>
-<tr class="odd">
-<td align="center">2166</td>
-<td align="center">-7618</td>
-</tr>
-<tr class="even">
-<td align="center">11783</td>
-<td align="center">16898</td>
-</tr>
-<tr class="odd">
-<td align="center">18689</td>
-<td align="center">33212</td>
-</tr>
-<tr class="even">
-<td align="center">0</td>
-<td align="center">-20391</td>
-</tr>
-<tr class="odd">
-<td align="center">0</td>
-<td align="center">-21417</td>
-</tr>
-<tr class="even">
-<td align="center">352095</td>
-<td align="center">784345</td>
-</tr>
-<tr class="odd">
-<td align="center">122607</td>
-<td align="center">103342</td>
-</tr>
-<tr class="even">
-<td align="center">6889</td>
-<td align="center">12392</td>
-</tr>
-<tr class="odd">
-<td align="center">430148</td>
-<td align="center">1133635</td>
-</tr>
-<tr class="even">
-<td align="center">52484</td>
-<td align="center">96490</td>
-</tr>
-<tr class="odd">
-<td align="center">167035</td>
-<td align="center">167035</td>
-</tr>
-<tr class="even">
-<td align="center">128665</td>
-<td align="center">239707</td>
-</tr>
-<tr class="odd">
-<td align="center">336123</td>
-<td align="center">541389</td>
-</tr>
-<tr class="even">
-<td align="center">10384</td>
-<td align="center">10384</td>
-</tr>
-<tr class="odd">
-<td align="center">11121</td>
-<td align="center">22186</td>
-</tr>
-<tr class="even">
-<td align="center">190201</td>
-<td align="center">302306</td>
-</tr>
-<tr class="odd">
-<td align="center">261204</td>
-<td align="center">261204</td>
-</tr>
-<tr class="even">
-<td align="center">372863</td>
-<td align="center">372724</td>
-</tr>
-<tr class="odd">
-<td align="center">149623</td>
-<td align="center">348310</td>
-</tr>
-<tr class="even">
-<td align="center">117456</td>
-<td align="center">226484</td>
-</tr>
-<tr class="odd">
-<td align="center">105101</td>
-<td align="center">105101</td>
-</tr>
-<tr class="even">
-<td align="center">81226</td>
-<td align="center">203784</td>
-</tr>
-<tr class="odd">
-<td align="center">119.8</td>
-<td align="center">-1106</td>
-</tr>
-<tr class="even">
-<td align="center">1811</td>
-<td align="center">4033</td>
-</tr>
-<tr class="odd">
-<td align="center">62.89</td>
-<td align="center">2702</td>
-</tr>
-<tr class="even">
-<td align="center">249</td>
-<td align="center">127.3</td>
-</tr>
-<tr class="odd">
-<td align="center">888173</td>
-<td align="center">888173</td>
-</tr>
-<tr class="even">
-<td align="center">454432</td>
-<td align="center">1300696</td>
-</tr>
-<tr class="odd">
-<td align="center">896.5</td>
-<td align="center">2925</td>
-</tr>
-<tr class="even">
-<td align="center">247798</td>
-<td align="center">439548</td>
-</tr>
-<tr class="odd">
-<td align="center">171893</td>
-<td align="center">171460</td>
-</tr>
-<tr class="even">
-<td align="center">91926</td>
-<td align="center">91911</td>
-</tr>
-<tr class="odd">
-<td align="center">210119</td>
-<td align="center">210063</td>
-</tr>
-<tr class="even">
-<td align="center">236338</td>
-<td align="center">327659</td>
-</tr>
-<tr class="odd">
-<td align="center">12094</td>
-<td align="center">32740</td>
-</tr>
-<tr class="even">
-<td align="center">9387</td>
-<td align="center">14247</td>
-</tr>
-<tr class="odd">
-<td align="center">1235</td>
-<td align="center">1911</td>
-</tr>
-<tr class="even">
-<td align="center">-10.26</td>
-<td align="center">706.3</td>
-</tr>
-<tr class="odd">
-<td align="center">99117</td>
-<td align="center">99687</td>
-</tr>
-<tr class="even">
-<td align="center">74719</td>
-<td align="center">75320</td>
-</tr>
-<tr class="odd">
-<td align="center">36178</td>
-<td align="center">40150</td>
-</tr>
-<tr class="even">
-<td align="center">54017</td>
-<td align="center">55587</td>
-</tr>
-<tr class="odd">
-<td align="center">116812</td>
-<td align="center">117961</td>
-</tr>
-<tr class="even">
-<td align="center">103167</td>
-<td align="center">210219</td>
-</tr>
-<tr class="odd">
-<td align="center">146935</td>
-<td align="center">147136</td>
-</tr>
-<tr class="even">
-<td align="center">108559</td>
-<td align="center">108643</td>
-</tr>
-<tr class="odd">
-<td align="center">111615</td>
-<td align="center">113374</td>
-</tr>
-<tr class="even">
-<td align="center">144281</td>
-<td align="center">145333</td>
-</tr>
-<tr class="odd">
-<td align="center">138546</td>
-<td align="center">140170</td>
-</tr>
-<tr class="even">
-<td align="center">89306</td>
-<td align="center">172015</td>
 </tr>
 </tbody>
 </table>
