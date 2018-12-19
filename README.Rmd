@@ -28,9 +28,6 @@ A verificação de consistência é uma avaliação realizada para indicar se a 
 
 ### Repetição de Atributos (Colunas)
 
-```{r, echo = F, eval = F}
-library(readxl)
-
 A repetição na nomenclatura dos atributos foi um grave problema encontrado nas cinco bases de dados dos Relatórios de Sustentabilidade, no arquivo de número 5 (A5), por exemplo, há dois atributos **DGC**. Posto que não há singularidade, esse tipo de conflito impossibilita a manutenção da desiginação original, consequentemente, a importação dos dados feita com *data loaders* (eg.: 'read_xlsx') dos principais pacotes estatísticos automaticamente altera o identificador para **DGC** e **DGC_1**.
 
 A tabela de frequência do Apêndice A apresenta todos os atributos conflitantes, já a Tabela 1 exibe os 11 indicadores selecionados na seção IV (p. 28). Note que uma BD consistente exibiria frequência 1 em cada arquivo e um total de 5, as siglas **A1**-**A5** referem-se aos arquivos.
@@ -42,7 +39,7 @@ library(data.table); library(dplyr); library(pander)
   # File and sheet location
 
   sheet <- "Base Dados"
-  folder_path <- "/home/renatovp/Dropbox/Cemig 2.0/BaseDadosANEEL/Base em Excel"
+  folder_path <- "./data/"
   
   # Get file path for all documents in the folder
   path_files <- list.files(folder_path, full.names = T, pattern = ".xlsx") 
