@@ -4,7 +4,7 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.path = "img/")
+knitr::opts_chunk$set(echo = FALSE, fig.path = "img/")
 options(scipen = 9999, digits = 4, OutDec = ",")
 ```
 
@@ -214,7 +214,6 @@ valores repetidos para uma determinada entrada no BD.
 válida será considerada.
 - A primeira coluna com um determinado nome de variável será selecionada.
 
-
 Foi feito o estudo descritivo dos indicadores **1**, **2.1**, **2.2**, **4.1**, **4.2**, **5**, **6.2**, **6.4** com base em 9 atributos inicialmente consistentes.
 
 - 1.) DLR / EBITDA - QRR
@@ -290,15 +289,6 @@ ggplot(dt_sel, aes(pmso_ajustado_pmso_regulatorio)) +
   theme_light()
 ```
 
-### Investimentos
-
-```{r investimentos}
-ggplot(dt_sel, aes(capex_u4_5a)) +
-  geom_histogram(bins = 10, na.rm = T, fill = "lightblue", color = "white") +
-  labs(x = "Investimetos", y = "Frequência") +
-  theme_light()
-```
-
 ### Rentabilidade
 
 ```{r rentabilidade}
@@ -326,12 +316,9 @@ ggplot(dt_sel, aes(fluxo_acionista_brl_x_cap_proprio)) +
 
 ### Operacional
 
-```{r dgc}
-ggplot(dt_sel, aes(dgc)) +
-  geom_histogram(bins = 10, na.rm = T, fill = "lightblue", color = "white") +
-  labs(x = "Operacional (6.1)", y = "Frequência") +
-  theme_light()
-```
+Como dito anteriormente, as variáveis "Desempenho Global de Continuidade" e 
+"Mercado CAGR U5A" não foram avaliadas por não apresentarem consistência na
+base de dados.
 
 ```{r perdas-1}
 ggplot(dt_sel, aes(perdas_realizadas)) +
@@ -344,13 +331,6 @@ ggplot(dt_sel, aes(perdas_realizadas)) +
 ggplot(dt_sel, aes(perdas_regulatorias)) +
   geom_histogram(bins = 10, na.rm = T, fill = "lightblue", color = "white") +
   labs(x = "Operacional (6.2.2)", y = "Frequência") +
-  theme_light()
-```
-
-```{r mercado}
-ggplot(dt_sel, aes(mercado_cagr_u5a)) +
-  geom_histogram(bins = 10, na.rm = T, fill = "lightblue", color = "white") +
-  labs(x = "Operacional (6.3)", y = "Frequência") +
   theme_light()
 ```
 
@@ -379,7 +359,9 @@ ellipse::plotcorr(xc, col=cm.colors(12)[5*xc + 6], type = "lower", diag = TRUE)
 
 ```
 
-### Séries temporais para a cemig
+## Visualização das séries temporais
+
+Séries temporais para a CEMIG-D
 
 ```{r cemig}
 dt_cemig <- dt %>% 
@@ -399,14 +381,96 @@ dt_cemig <- dt %>%
   
 ```
 
-> Set periodo to datetime
+```{r fix-date}
+library(zoo)
 
-# dt <- read.csv("dados_last_not_na.csv")
+yr <- substr(as.character(dt_cemig$periodo), 1, 4)
+mth <- substr(as.character(dt_cemig$periodo), 5, 6)
+dt_cemig$date <- as.yearmon(paste0(yr, "-", mth))
 ```
 
-- Histogramas das variáveis.
-- Correlograma - Elipse.
-- Série temporal das variáveis selecionadas para a Cemig.
+### Endividamento
+
+```{r endividamento-t}
+ggplot(dt_cemig, aes(x = date, y = dlr_ebitda_ajst_qrr)) + 
+  geom_line(color = "darkblue") +
+  geom_point(color = "darkblue") +
+  labs(x = "Data",y = "Endividamento") +
+  theme_light()
+```
+
+### Eficiência
+
+```{r ef-1-t}
+ggplot(dt_cemig, aes(x = date, y = ebitda_ajst_vpb_reg)) + 
+  geom_line(color = "darkblue") +
+  geom_point(color = "darkblue") +
+  labs(x = "Data", y = "Eficiência (2.1)") +
+  theme_light()
+```
+
+```{r ef-2-t}
+ggplot(dt_cemig, aes(x = date, y = pmso_ajustado_pmso_regulatorio)) + 
+  geom_line(color = "darkblue") +
+  geom_point(color = "darkblue") +
+  labs(x = "Data", y = "Eficiência (2.2)") +
+  theme_light()
+```
+
+### Rentabilidade
+
+```{r rentabilidade-t}
+ggplot(dt_cemig, aes(x = date, y = ebit_ajst_ebit_reg_brl)) + 
+  geom_line(color = "darkblue") +
+  geom_point(color = "darkblue") +
+  labs(x = "Data", y = "Rentabilidade (4.1)") +
+  theme_light()
+```
+
+```{r rentabilidade-2-t}
+ggplot(dt_cemig, aes(x = date, y = setoriais_constituicao_ebitda_reg)) + 
+  geom_line(color = "darkblue") +
+  geom_point(color = "darkblue") +
+  labs(x = "Data", y = "Rentabilidade (4.2)") +
+  theme_light()
+```
+
+### Retorno ao acionista
+
+```{r acionista-t}
+ggplot(dt_cemig, aes(x = date, y = fluxo_acionista_brl_x_cap_proprio)) + 
+  geom_line(color = "darkblue") +
+  geom_point(color = "darkblue") +
+  labs(x = "Data", y = "Retorno ao acionista") +
+  theme_light()
+```
+
+### Operacional
+
+```{r perdas-1-t}
+ggplot(dt_cemig, aes(x = date, y = perdas_realizadas)) + 
+  geom_line(color = "darkblue") +
+  geom_point(color = "darkblue") +
+  labs(x = "Data", y = "Operacional (6.2.1)") +
+  theme_light()
+```
+
+```{r perdas-2-t}
+ggplot(dt_cemig, aes(x = date, y = perdas_regulatorias)) + 
+  geom_line(color = "darkblue") +
+  geom_point(color = "darkblue") +
+  labs(x = "Data", y = "Operacional (6.2.2)") +
+  theme_light()
+```
+
+```{r consumidores-t}
+ggplot(dt_cemig, aes(x = date, y = n_cagr_u5a)) + 
+  geom_line(color = "darkblue") +
+  geom_point(color = "darkblue") +
+  labs(x = "Data", y = "Operacional (6.4)") +
+  theme_light()
+```
+
 
 ## Apêndice A
 
