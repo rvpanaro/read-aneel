@@ -1,8 +1,9 @@
 ---
-title: "read_aneel"
-output: github_document
+title: "Relatório"
+author: "Leandro e Renato"
+date: "19 de Dezembro de 2018"
+output: word_document
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 options(scipen = 9999, digits = 4, OutDec = ",")
