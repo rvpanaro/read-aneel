@@ -5,29 +5,32 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options(scipen = 9999, digits = 4, OutDec = ",")
 ```
 
-# Análise exploratória da base de dados do relatório de indicadores de 
+# Análise exploratória da BD do relatório de indicadores de 
 sustentatibilidade econômico-financeiros - ANEEL 
 
 Dada a necessidade de sistematização do monitoramento econômico-financeiro, a 
 ANEEL compila uma base de dados com variáveis financeiras e operacionais das 
 empresas distribuidoras de energia elétrica. As bases estão presentes em cinco
 arquivos .xlsx e apresentam dados anuais para cada empresa até 2016 e trimestrais
-desde então. Embora a base de dados tenha um grande número de variáveis disponíveis, os 
-indicadores selecionados pela 5a Edição do Relatório de Indicadores de Sustentabilidade Econômico-Financeira das Distribuidoras (pg 28):
+desde então. Embora a base de dados tenha um grande número de variáveis disponíveis, os principais
+indicadores foram selecionados na 5ª Edição do Relatório de Indicadores de Sustentabilidade Econômico-Financeira das Distribuidoras (pg 28):
 
 ![Figura 1 : Indicadores Selecionados](./img/indicadores.png)
 
 ## Análise de consistência 
 
-A verificação de consistência é uma avaliação realizada para indicar se os dados apresentam algum conflito interno ou incoerência. Nesse sentido, esta seção tem como objetivo averiguar a qualidade e relatar problemas ou erros no conjunto de informações fornecidas pelos 5 de Indicadores de Sustentatibilidade Econômico-Financeiros das Distribuidoras da ANEEL.
+A verificação de consistência é uma avaliação realizada para indicar se os dados apresentam algum conflito interno ou incoerência. Nesse sentido, esta seção tem como objetivo averiguar a qualidade dos dados e relatar problemas ou erros no conjunto de informações fornecidas pela ANEEL.
+
+O banco de dados ou base de dados (BD) é uma coleção organizada de dados que se relacionam de forma a criar alguma informação, capaz de direcionar pesquisas, estudos e tomadas de decisão. O modelo (plano) de BD adotado pela ANEEL consiste de matrizes bidimensionais que são a base para as planilhas eletrônicas, compostas por células de caracteres, inteiros ou números reais. 
 
 ### Repetição de Atributos (Colunas)
 
-O banco de dados é uma coleção organizada de dados que se relacionam de forma a criar alguma informação, capaz de direcionar pesquisas, estudos e tomadas de decisão. O modelo (plano) de base de dados adotado pela ANEEL consiste de matrizes bidimensionais que são a base para as planilhas eletrônicas, compostas por células de caracteres, inteiros ou números reais. 
+A violação da unicidade na nomenclatura dos atributos foi uma grave inconsistência encontrada nas cinco bases de dados dos Relatórios de Sustentabilidade, no arquivo de número 5 (A5), por exemplo, há dois atributos **DGC**. A repetição de colunas com a mesma alcunha gera um conflito de atributos que impossibilita a manutenção da desiginação original.
 
-A violação da unicidade na nomenclatura dos atributos foi uma grave inconsistência encontrada nas cinco bases de dados dos Relatórios de Sustentabilidade, no arquivo de número 5 (A5), por exemplo, há dois atributos **EBIT**. A repetição de colunas com a mesma alcunha gera um conflito de atributos que impossibilita a manutenção da desiginação original, de modo que, a importação dos dados usando *data loaders* (eg.: 'read_xlsx') dos principais pacotes estatísticos automaticamente alteram o identificador original e tratam a informação como **EBIT** e **EBIT_1**. A tabela de frequência do Apêndice A apresenta os atributos conflitantes, as siglas **A1**-**A5** referem-se aos cinco arquivos .xlsx disponíveis. Note que uma base de dados consistente exibiria frequência 1 em cada arquivo e um total de 5.
+Por consequência, a importação dos dados feita com *data loaders* (eg.: 'read_xlsx') dos principais pacotes estatísticos automaticamente altera o identificador para **DGC** e **DGC_1**. A tabela de frequência do Apêndice A apresenta todos os atributos conflitantes, já a Tabela 1 exibe os 11 indicadores selecionados na seção IV (p. 28). Note que uma BD consistente exibiria frequência 1 em cada arquivo e um total de 5, as siglas **A1**-**A5** referem-se aos arquivos.
 
 
 ```{r, echo = F, warning = FALSE, message = F}
@@ -55,13 +58,13 @@ library(data.table); library(dplyr); library(pander)
   header <- data.table::rbindlist(header); 
 
   # Keeps table good-looking
-    tab <- addmargins(table(header$col, header$file), 2); rm (header)
+  tab <- addmargins(table(header$col, header$file), 2); rm (header)
   colnames(tab) <-c("A1", "A2", "A3", "A4", "A5", "Total")
   rownames(tab)[which(rownames(tab) == "Sum")] <- "Total"
   
 ```
 
-A Tabela 1 exibe os 11 indicadores selecionados na seção IV (p. 28) da 5ª Edição do Relatório de Indicadores de Sustentabilidade Econômico-Financeira das Distribuidoras. 
+
 
 ```{r, echo = F, warning = F}
 header = c("DLR / EBITDA - QRR",
@@ -80,7 +83,7 @@ header = c("DLR / EBITDA - QRR",
 
 
 tab2 <- tab[match( header, rownames(tab)), ]
-pander(tab2, caption = "Tabela 1: Indicadores Selecionados. **A1**:Indicadores Base 2017 1T 2017 08 07.xlsx, **A2**: Indicadores Base 2017 2T 2017 11 10.xlsx, **A3**: Indicadores Base 2017 3T 2018 02 20.xlsx, **A4**: Indicadores Base 2018 1T 2018 08 06.xlsx e **A5**: Indicadores Base 2018 1T 2018 08 06.xlsx.")
+pander(tab2, caption = "Tabela 1: **A1**:Indicadores Base 2017 1T 2017 08 07.xlsx, **A2**: Indicadores Base 2017 2T 2017 11 10.xlsx, **A3**: Indicadores Base 2017 3T 2018 02 20.xlsx, **A4**: Indicadores Base 2018 1T 2018 08 06.xlsx e **A5**: Indicadores Base 2018 1T 2018 08 06.xlsx.")
 ```
 
 Foi feito o estudo descritivo dos indicadores **1**, **2.1**, **2.2**, **4.1**, **4.2**, **5**, **6.2**, **6.4** com base em 9 atributos inicialmente consistentes.
@@ -105,49 +108,126 @@ Foi feito o estudo descritivo dos indicadores **1**, **2.1**, **2.2**, **4.1**, 
 
 -------------------------------------
 
-### Tipos de Dados
+### Tipos de Dado
 
-Os tipos de dados são um conceito importante para aplicação correta de técnicas estatíticas. As informações ou dados quantitativos (numéricos) são baseados em uma de medição. Em contraste, as informações qualitativas (categóricas) registram qualidades que são descritivas e subjetivas que representam grupos ou características (e.g.: sexo) e podem assumir valores numéricos (e.g.: 1 para mulheres e 0 para homens), observe que não têm significado matemático.
+O tipo de variável é um conceito primordial para aplicação correta de técnicas estatíticas. Há dois tipos de dado o quantitativo ou numérico que resulta de uma mensuração (e.g.: estatura, peso) e o dado qualitativo ou categórico que registra qualidades descritivas ou subjetivas, podem representam grupos ou características (e.g.: sexo) e podem assumir valores numéricos (e.g.: 1 para mulheres e 0 para homens), observe que uma varivel categórica não têm significado matemático.
 
-![](img/diag.png)
+<div style="text-align:center"><img src ="img/diag.png" /></div>
 
-Os indicadores selecionados são provenientes da combinação de outros atributos de natureza numérica, uma vez que medem distintos aspectos financeiros das distribuidoras. No entanto, além de valores inteiros e reais, encontram-se células com caracteres, o que evidencia outra inconsistência na base de dados.  Em campos de natureza quantitativa, variáveis qualitativas foram consideradas para situações adversas inerentes ao cálculo dos indicadores. No Apêndice B segue a interpretação dada aos valores usados segundo o Glossário da página 27 da 5ª Edição do Relatório.
+Os indicadores selecionados são provenientes da combinação de atributos de natureza numérica. No entanto, em campos de natureza quantitativa, variáveis qualitativas foram consideradas para situações adversas e inerentes ao cálculo desses indicadores. Ou seja, além de valores inteiros e reais, encontram-se células com caracteres, o que configura outra inconsistência na BD. No Apêndice B segue a interpretação para cada valor usado, segundo o Glossário (p. 27) da 5ª Edição do Relatório.
 
-```{r, echo = F, warnings = F, message = F }
-source("read_aneel3.R"); library(pander)
+```{r, echo = F, warnings = F, message = F, include = F }
+source("read_aneel3.R"); library(pander); library(dplyr)
   
 dat <- read_aneel3(folder_path = folder_path, sheet = sheet, col_names = header, clean_names = F )
-  
-  cat <- c("Cxa Líq", "Flx Neg", "Ebitda Neg", "nd")
-  
-# out_char <-  function(var, cat){
-#   
-#  i <- which(colnames(dat)== var) 
-#  
-#  pander( addmargins(table( as.factor(subset(dat[,i], dat[,i] == cat) ) ) ), caption = var)
-# }  
-# 
-# out_char("DLR / EBITDA - QRR", cat)
-# 
-# for (aux in header){
-#   out_char(aux, cat)
-# }
 
+#  DLR / EBITDA - QRR  
+
+dat %>% 
+  select(`DLR / EBITDA - QRR`) %>% 
+  filter(`DLR / EBITDA - QRR` == "Cxa Líq" | 
+         `DLR / EBITDA - QRR` == "Flx Neg" | 
+         `DLR / EBITDA - QRR` == "Ebitda Neg" | 
+         `DLR / EBITDA - QRR` == "nd") %>% 
+  table() %>% 
+  pander()
+
+# Setoriais Constituição / EBITDA Reg
+
+dat %>% 
+  select(`Setoriais Constituição / EBITDA Reg`) %>% 
+  filter(`Setoriais Constituição / EBITDA Reg` == "nd") %>% 
+  table() %>% 
+  pander()
+
+# Fluxo Acionista / (BRL x Cap Próprio)
+
+dat %>% 
+  select(`Fluxo Acionista / (BRL x Cap Próprio)`) %>% 
+  filter(`Fluxo Acionista / (BRL x Cap Próprio)` == "0 / +" |
+         `Fluxo Acionista / (BRL x Cap Próprio)` == "- / +") %>% 
+  table() %>% 
+  pander()
+
+# DGC
+
+dat %>% 
+  select(`DGC`) %>% 
+  filter(`DGC` == "nd") %>% 
+  table() %>%
+  pander()
+
+# Perdas Realizadas 
+
+dat %>% 
+  select(`Perdas Realizadas`) %>% 
+  filter(`Perdas Realizadas` == "nd") %>% 
+  table() %>%  
+  pander()
+
+# Perdas Regulatórias
+
+dat %>% 
+  select(`Perdas Regulatórias`) %>% 
+  filter(`Perdas Regulatórias` == "nd") %>% 
+  table() %>% 
+  pander()
+
+# Nº CAGR U5A
+
+dat %>% 
+  select(`Nº CAGR U5A`) %>% 
+  filter(`Nº CAGR U5A` == "nd") %>% 
+  table() %>% 
+  pander()
+```
+
+
+|                                       | Cxa Líq | Ebitda Neg | Flx Neg | nd   | 0 / + | - / + |
+|---------------------------------------|---------|------------|---------|------|-------|-------|
+| DLR / EBITDA - QRR                    | 233     | 303        | 203     | 12   | -     | -     |
+| Setoriais Constituição / EBITDA Reg   | -       | -          | -       | 2093 | -     | -     |
+| Fluxo Acionista / (BRL x Cap Próprio) | -       | -          | -       | -    | 394   | 317   |
+| DGC                                   | -       | -          | -       | 443  | -     | -     |
+| Perdas Realizadas                     | -       | -          | -       | 443  | -     | -     |
+| Perdas Regulatórias                   | -       | -          | -       | 443  | -     | -     |
+| Nº CAGR U5A                           | -       | -          | -       | 58   | -     | -     |
+
+Isto posto, foi feita a verificação do cálculo dos indicadores no intuito de desvendar os valores correspondentes à "Cxa Líq", "Flx Neg", "Ebitda Neg", nd", "0 / +" e "- / +". Surpreendentemente, regressamos ao problema inicial de colunas repetidas, porém, desta vez com relação aos valores que geram os indicadores selecionados, além disso, descobrimos que há atributos de mesmo nome com valores distintos. Por exemplo, no arquivo **A5** **EBITDA Ajst** e **EBITDA Ajst_1** diferem 576 vezes (Apêndice C). 
+
+```{r, echo = F, warnings = F, message = F}
+
+tab4 <- file_dump[[5]][-1,which(file_dump[[5]][1,]== "EBITDA Ajst")]
+colnames(tab4) <- c("EBITDA Ajst", "EBITDA Ajst_1")
+
+tab4 %>% 
+  mutate(`EBITDA Ajst` = as.numeric(`EBITDA Ajst`), `EBITDA Ajst_1` = as.numeric(`EBITDA Ajst_1`)) %>% 
+  filter(round(`EBITDA Ajst`, 4)!= round(`EBITDA Ajst_1`, 4)) %>% 
+  head() %>% 
+  pander()
 ```
 
 ## Princípio da Unicidade
 
+Nesta seção foi abordado o princípio da unicidade que proporciona a identificacão de cada item armazenado nas tuplas (linhas). Chaves primárias referem-se ao campo cujos valores podem ser usadas como um índice de referência. Portanto, uma chave primária não pode ter valor nulo ou repetição, no caso esse indicador único é a variável 'Referência' composta pela combinação de 'Distribuição' e 'Período'.
 
-- Exemplo da Cemig.
+```{r, echo = F, warnings = F, message = F}
+tab5 <- dat %>% 
+  filter(`Referência` == "Cemig-D201703") 
+
+pander(tab5[, c(which(colnames(tab5) ==  "Referência"),
+                      which(tab5[1,] != tab5[2,]))])
+```
+
 
 ## Análise descritiva
 
-Prosseguiremos agora para a análise descritiva da base de dados.
+Prosseguiremos agora para a análise descritiva da BD.
 Numa tentativa de contornar os problemas previamente citados, assumimos algumas 
 premissas:
 
 - Os dados mais recentes são mais confiáveis e serão utilizados quando houver 
-valores repetidos para uma determinada entrada no banco de dados.
+valores repetidos para uma determinada entrada no BD.
 - Quando o valor não estiver disponível (NA) na base mais recente, a última entrada
 válida será considerada.
 - A primeira coluna com um determinado nome de variável será selecionada.
@@ -214,3 +294,13 @@ válida será considerada.
 | VPA                   | Custos da Parcela A = Custos setoriais = Encargos do Consumidor, Despesas com Compra de Energia, Transmissão e Combustível para Geração (líquido do Reembolso da CCC).                                                                                                                                                                                                                                                                                             |
 | VPB                   | Parcela B = ROL deduzida dos Custos da Parcela A (VPA).                                                                                                                                                                                                                                                                                                                                                                                                            |
 | VPB Reg               | Parcela B Regulatória = Itens calculados pela ANEEL e contemplados na tarifa de Despesas de PMSO e Depreciação e Remuneração dos investimentos realizados prudentemente. Observa-se que nos RTOs, só há abertura de Outras Receitas a partir de 2017 para os contratos aditivados. Assim, para os RTOs que não as têm, calculou-se essas receitas pela variação do IPCA que é agregado ao VPB das tarifas para se chegar ao VPB Reg.                               |
+
+## Apêndice C
+
+```{r, echo = F}
+tab4 %>% 
+  mutate(`EBITDA Ajst` = as.numeric(`EBITDA Ajst`), `EBITDA Ajst_1` = as.numeric(`EBITDA Ajst_1`)) %>% 
+  filter(round(`EBITDA Ajst`, 4)!= round(`EBITDA Ajst_1`, 4)) %>% 
+  head() %>% 
+  pander()
+```
