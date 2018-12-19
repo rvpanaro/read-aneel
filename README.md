@@ -336,69 +336,29 @@ Séries temporais para a CEMIG-D
 
 ### Endividamento
 
-    ## Don't know how to automatically pick scale for object of type yearmon. Defaulting to continuous.
-
-    ## Warning: Removed 6 rows containing missing values (geom_point).
-
 ![](img/endividamento-t-1.png)
 
 ### Eficiência
 
-    ## Don't know how to automatically pick scale for object of type yearmon. Defaulting to continuous.
-
 ![](img/ef-1-t-1.png)
-
-    ## Don't know how to automatically pick scale for object of type yearmon. Defaulting to continuous.
 
 ![](img/ef-2-t-1.png)
 
 ### Rentabilidade
 
-    ## Don't know how to automatically pick scale for object of type yearmon. Defaulting to continuous.
-
 ![](img/rentabilidade-t-1.png)
-
-    ## Don't know how to automatically pick scale for object of type yearmon. Defaulting to continuous.
-
-    ## Warning: Removed 8 rows containing missing values (geom_path).
-
-    ## Warning: Removed 10 rows containing missing values (geom_point).
 
 ![](img/rentabilidade-2-t-1.png)
 
 ### Retorno ao acionista
 
-    ## Don't know how to automatically pick scale for object of type yearmon. Defaulting to continuous.
-
-    ## Warning: Removed 7 rows containing missing values (geom_path).
-
-    ## Warning: Removed 7 rows containing missing values (geom_point).
-
 ![](img/acionista-t-1.png)
 
 ### Operacional
 
-    ## Don't know how to automatically pick scale for object of type yearmon. Defaulting to continuous.
-
-    ## Warning: Removed 2 rows containing missing values (geom_path).
-
-    ## Warning: Removed 5 rows containing missing values (geom_point).
-
 ![](img/perdas-1-t-1.png)
 
-    ## Don't know how to automatically pick scale for object of type yearmon. Defaulting to continuous.
-
-    ## Warning: Removed 2 rows containing missing values (geom_path).
-
-    ## Warning: Removed 5 rows containing missing values (geom_point).
-
 ![](img/perdas-2-t-1.png)
-
-    ## Don't know how to automatically pick scale for object of type yearmon. Defaulting to continuous.
-
-    ## Warning: Removed 2 rows containing missing values (geom_path).
-
-    ## Warning: Removed 5 rows containing missing values (geom_point).
 
 ![](img/consumidores-t-1.png)
 

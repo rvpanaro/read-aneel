@@ -4,7 +4,8 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, fig.path = "img/")
+knitr::opts_chunk$set(echo = FALSE, fig.path = "img/", message = FALSE, 
+                      warning = FALSE)
 options(scipen = 9999, digits = 4, OutDec = ",")
 ```
 
@@ -392,9 +393,14 @@ dt_cemig$date <- as.yearmon(paste0(yr, "-", mth))
 ### Endividamento
 
 ```{r endividamento-t}
+t_series <- zoo(dt_cemig$dlr_ebitda_ajst_qrr, dt_cemig$date)
+t_na <- na.approx(t_series)
+dt_cemig$series <- as.numeric(t_na)
+
 ggplot(dt_cemig, aes(x = date, y = dlr_ebitda_ajst_qrr)) + 
   geom_line(color = "darkblue") +
   geom_point(color = "darkblue") +
+  geom_path(aes(y = series), linetype = "dashed", color = "darkblue") + 
   labs(x = "Data",y = "Endividamento") +
   theme_light()
 ```
@@ -402,17 +408,27 @@ ggplot(dt_cemig, aes(x = date, y = dlr_ebitda_ajst_qrr)) +
 ### Eficiência
 
 ```{r ef-1-t}
+t_series <- zoo(dt_cemig$ebitda_ajst_vpb_reg, dt_cemig$date)
+t_na <- na.approx(t_series)
+dt_cemig$series <- as.numeric(t_na)
+
 ggplot(dt_cemig, aes(x = date, y = ebitda_ajst_vpb_reg)) + 
   geom_line(color = "darkblue") +
   geom_point(color = "darkblue") +
+  geom_path(aes(y = series), linetype = "dashed", color = "darkblue") + 
   labs(x = "Data", y = "Eficiência (2.1)") +
   theme_light()
 ```
 
 ```{r ef-2-t}
+t_series <- zoo(dt_cemig$pmso_ajustado_pmso_regulatorio, dt_cemig$date)
+t_na <- na.approx(t_series)
+dt_cemig$series <- as.numeric(t_na)
+
 ggplot(dt_cemig, aes(x = date, y = pmso_ajustado_pmso_regulatorio)) + 
   geom_line(color = "darkblue") +
   geom_point(color = "darkblue") +
+  geom_path(aes(y = series), linetype = "dashed", color = "darkblue") + 
   labs(x = "Data", y = "Eficiência (2.2)") +
   theme_light()
 ```
@@ -420,17 +436,27 @@ ggplot(dt_cemig, aes(x = date, y = pmso_ajustado_pmso_regulatorio)) +
 ### Rentabilidade
 
 ```{r rentabilidade-t}
+t_series <- zoo(dt_cemig$ebit_ajst_ebit_reg_brl, dt_cemig$date)
+t_na <- na.approx(t_series)
+dt_cemig$series <- as.numeric(t_na)
+
 ggplot(dt_cemig, aes(x = date, y = ebit_ajst_ebit_reg_brl)) + 
   geom_line(color = "darkblue") +
   geom_point(color = "darkblue") +
+  geom_path(aes(y = series), linetype = "dashed", color = "darkblue") + 
   labs(x = "Data", y = "Rentabilidade (4.1)") +
   theme_light()
 ```
 
 ```{r rentabilidade-2-t}
+t_series <- zoo(dt_cemig$setoriais_constituicao_ebitda_reg, dt_cemig$date)
+t_na <- na.approx(t_series)
+dt_cemig$series <- as.numeric(t_na)
+
 ggplot(dt_cemig, aes(x = date, y = setoriais_constituicao_ebitda_reg)) + 
   geom_line(color = "darkblue") +
   geom_point(color = "darkblue") +
+  geom_path(aes(y = series), linetype = "dashed", color = "darkblue") + 
   labs(x = "Data", y = "Rentabilidade (4.2)") +
   theme_light()
 ```
@@ -438,9 +464,14 @@ ggplot(dt_cemig, aes(x = date, y = setoriais_constituicao_ebitda_reg)) +
 ### Retorno ao acionista
 
 ```{r acionista-t}
+t_series <- zoo(dt_cemig$fluxo_acionista_brl_x_cap_proprio, dt_cemig$date)
+t_na <- na.approx(t_series)
+dt_cemig$series <- c(as.numeric(t_na), rep(240, 7))
+
 ggplot(dt_cemig, aes(x = date, y = fluxo_acionista_brl_x_cap_proprio)) + 
   geom_line(color = "darkblue") +
   geom_point(color = "darkblue") +
+  geom_path(aes(y = series), linetype = "dashed", color = "darkblue") + 
   labs(x = "Data", y = "Retorno ao acionista") +
   theme_light()
 ```
@@ -448,29 +479,43 @@ ggplot(dt_cemig, aes(x = date, y = fluxo_acionista_brl_x_cap_proprio)) +
 ### Operacional
 
 ```{r perdas-1-t}
+t_series <- zoo(dt_cemig$perdas_realizadas, dt_cemig$date)
+t_na <- na.approx(t_series)
+dt_cemig$series <- c(as.numeric(t_na), rep(0.1323, 2))
+
 ggplot(dt_cemig, aes(x = date, y = perdas_realizadas)) + 
   geom_line(color = "darkblue") +
   geom_point(color = "darkblue") +
+  geom_path(aes(y = series), linetype = "dashed", color = "darkblue") + 
   labs(x = "Data", y = "Operacional (6.2.1)") +
   theme_light()
 ```
 
 ```{r perdas-2-t}
+t_series <- zoo(dt_cemig$perdas_regulatorias, dt_cemig$date)
+t_na <- na.approx(t_series)
+dt_cemig$series <- c(as.numeric(t_na), rep(0.1073, 2))
+
 ggplot(dt_cemig, aes(x = date, y = perdas_regulatorias)) + 
   geom_line(color = "darkblue") +
   geom_point(color = "darkblue") +
+  geom_path(aes(y = series), linetype = "dashed", color = "darkblue") + 
   labs(x = "Data", y = "Operacional (6.2.2)") +
   theme_light()
 ```
 
 ```{r consumidores-t}
+t_series <- zoo(dt_cemig$n_cagr_u5a, dt_cemig$date)
+t_na <- na.approx(t_series)
+dt_cemig$series <- c(as.numeric(t_na), rep(0.02198, 2))
+
 ggplot(dt_cemig, aes(x = date, y = n_cagr_u5a)) + 
   geom_line(color = "darkblue") +
   geom_point(color = "darkblue") +
+  geom_path(aes(y = series), linetype = "dashed", color = "darkblue") + 
   labs(x = "Data", y = "Operacional (6.4)") +
   theme_light()
 ```
-
 
 ## Apêndice A
 
